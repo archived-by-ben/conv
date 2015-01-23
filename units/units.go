@@ -1,52 +1,51 @@
+// Package units returns the name, symbols and categories of
+// the units used in conversion.
 package units
 
-// name, argument, symbol, quantity
-type unit struct {
-	n, a, s, q string
-}
-
-var (
-	request = [4]string{"nam", "arg", "sym", "qty"}
-	cel     = unit{"Celsius", "C", "°C", "temperature"}
-	fah     = unit{"Fahrenheit", "F", "°F", "temperature"}
+import (
+	"fmt"
 )
 
-func Info(u string, req string) string {
-	switch {
-	case u == "cel":
-		return extractdata(cel, req)
-	case u == "fah":
-		return extractdata(fah, req)
+type unit struct {
+	name, symbol string
+}
+
+// Unit data containing the name, symbol & category.
+var (
+	c  = unit{"Celsius", "°C"}
+	f  = unit{"Fahrenheit", "°F"}
+	hp = unit{"Horsepower", "hp"}
+	w  = unit{"Watt", "W"}
+	kw = unit{"kilowatt", "kW"}
+	mw = unit{"megawatt", "MW"}
+)
+
+// Info extracts data from the collection of unit data.
+// Here it fetches the row of data then uses Extr to fetch
+// the piece of data.
+func Info(unit string, request string) string {
+	switch unit {
+	case "c":
+		return extr(c, request)
+	case "f":
+		return extr(f, request)
+	case "hp":
+		return extr(hp, request)
+	case "w":
+		return extr(w, request)
 	}
-	return ""
+	err := fmt.Errorf("the unit %s is cannot be found", unit)
+	return fmt.Sprint(err)
 }
 
-func extractdata(u unit, req string) string {
-	switch {
-	case req == "nam":
-		return name(u)
-	case req == "arg":
-		return argument(u)
-	case req == "sym":
-		return symbol(u)
-	case req == "qty":
-		return quantity(u)
+// Extra extracts the data from the unit collection.
+func extr(u unit, req string) string {
+	switch req {
+	case "nam":
+		return u.name
+	case "sym":
+		return u.symbol
 	}
-	return ""
-}
-
-func name(u unit) string {
-	return u.n
-}
-
-func argument(u unit) string {
-	return u.a
-}
-
-func symbol(u unit) string {
-	return u.s
-}
-
-func quantity(u unit) string {
-	return u.q
+	err := fmt.Errorf("the requested field %s does not exist", req)
+	return fmt.Sprint(err)
 }

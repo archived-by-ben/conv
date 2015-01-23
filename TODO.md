@@ -1,7 +1,7 @@
 #TODO
 
 ### Power quantity
-* Convert horsepower to kilowatts, vv.
+* ~~Convert horsepower to kilowatts, vv.~~
 
 ### Distance quantity
 * cm <> inch

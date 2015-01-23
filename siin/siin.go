@@ -1,9 +1,5 @@
-/*
-Le Système International d'Unités
-International System of Units
-SI to metric or imperial to units
-*/
-
+// Siin package converts units of SI (International System of Units)
+// into common metric and imperial units.
 package siin
 
 func Fahrenheit(si float64) float64 {
@@ -12,4 +8,12 @@ func Fahrenheit(si float64) float64 {
 
 func Celsius(si float64) float64 {
 	return si - 273.15
+}
+
+func Horsepower(si float64) float64 {
+	return si / 746
+}
+
+func Watt(si float64) float64 {
+	return si
 }

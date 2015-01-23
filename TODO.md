@@ -38,7 +38,7 @@ Maybe seperate these into liquids?
 
 ### Mass quantity
 * carat
-* kilogram
+* gram
 * ounce
 * pound
 * stone

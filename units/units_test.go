@@ -7,12 +7,10 @@ func TestInfo(t *testing.T) {
 		in, want string
 	}{
 		{"nam", "Celsius"},
-		{"arg", "C"},
 		{"sym", "°C"},
-		{"qty", "temperature"},
 	}
 	for _, c := range cases {
-		got := Info("cel", c.in)
+		got := Info("c", c.in)
 		if got != c.want {
 			t.Errorf("Info(%q) == %q, want %q", c.in, got, c.want)
 		}

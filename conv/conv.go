@@ -17,9 +17,8 @@ import (
 )
 
 var (
-	in, out   string
-	fin, fout float64
-	p         = fmt.Printf
+	x, y float64
+	p    = fmt.Printf
 )
 
 // Init checks for the existence of user arguments otherwise the help is displayed.
@@ -28,67 +27,41 @@ func init() {
 	if len(os.Args) < 2 {
 		err := fmt.Errorf("No measurement or unit were provided")
 		fmt.Println(err)
-		help()
+		pHelp()
 		os.Exit(0)
 	}
 	// user requested help
 	switch os.Args[1] {
 	case "-h", "--help", "/?":
-		help()
+		pHelp()
 		os.Exit(0)
 	}
 }
 
-// Handle user input then calculate and display conversions.
+// Handle user input then calculate and display any conversions.
 func main() {
-	uunit, fin := input()
-	switch uunit {
+	uin, x := input()
+	switch uin {
 	case "f":
-		// takes the float input (fin) and converts it to a International System (SI) unit
-		// then takes the SI unit and converts it into Celsius
-		fout = siin.Celsius(siout.Fahrenheit(fin))
-		// displays the input and the results to the user
-		legacy(fin, fout, uunit, "c")
+		y = siin.Celsius(siout.Fahrenheit(x))
+		pLegacy(x, y, uin, "c")
 	case "c":
-		fout = siin.Fahrenheit(siout.Celsius(fin))
-		legacy(fin, fout, uunit, "f")
+		y = siin.Fahrenheit(siout.Celsius(x))
+		pLegacy(x, y, uin, "f")
 	case "hp":
-		fout = siin.Watt(siout.Horsepower(fin))
-		metric(fin, fout, uunit, "w")
+		y = siin.Watt(siout.Horsepower(x))
+		pMetric(x, y, uin, "w")
 	case "w":
-		fout = siin.Horsepower(siout.Watt(fin))
-		legacy(fin, fout, uunit, "hp")
+		y = siin.Horsepower(siout.Watt(x))
+		pLegacy(x, y, uin, "hp")
 	default:
-		err := fmt.Errorf("The unit type '%s' does not exist", uunit)
+		err := fmt.Errorf("The unit type '%s' does not exist", uin)
 		fmt.Println(err)
 	}
 }
 
-// Help displays the end user help.
-func help() {
-	p("conv is a tool that converts common use units of measurements.\n\n")
-	p("Usage:\n\tconv measurement unit\n\n")
-	p("Example:\n\tconv 100f\n\n")
-	p("\t100.0 °F converts to 37.8 °C (Celsius)\n\n")
-	// dynamically generate this help?
-	//p("The %s units are:\n\n", units.Info("f", "cat"))
-	p("The permitted units are:\n\n")
-	measurements := []string{"c", "f", "w", "hp"}
-	helpTemplate(measurements)
-	/* Please keep this as it is a requirement of the CC licence. */
-	p("\nCreated by Ben Garrett as a learning project for Go (lang).\n")
-	p("Personal: <http://bens.zone> Source: <https://github.com/bengarrett/conv>\n")
-}
-
-// HelpTemplate is used by the Help function to print permitted units.
-func helpTemplate(unitCol []string) {
-	for _, u := range unitCol {
-		p("\t%s\t%s (%s)\n", u, units.Info(u, "sym"), units.Info(u, "nam"))
-	}
-}
-
 // Input parses user arguments to determine the measurement unit and value.
-func input() (uunit string, fin float64) {
+func input() (string, float64) {
 	// create a slice to append strings
 	s := []string{}
 	s = append(s, os.Args[1]) // append 1st user argument
@@ -96,74 +69,92 @@ func input() (uunit string, fin float64) {
 		s = append(s, os.Args[2]) // append 2nd user argument if provided
 	}
 	// ignore all other user arguments but combine 1st & 2nd into a single string
-	ui := strings.Join(s, "")
-	ui = strings.ToLower(ui)
-	// create a reg expression to replace all non-alpha characters
-	uu := regexp.MustCompile("[^a-z]").ReplaceAllString(ui, "")
-	// create reg expression to replace all non float numbers and characters
-	uv := regexp.MustCompile("[^-?0-9+.?[^0-9]*").ReplaceAllString(ui, "")
-	if len(uv) < 1 {
+	args := strings.Join(s, "")
+	args = strings.ToLower(args)
+	// create a reg expression to replace all non-alphabetic characters
+	uin := regexp.MustCompile("[^a-z]").ReplaceAllString(args, "")
+	// create reg expression to removal anything that isn't a number, decimal or sign
+	val := regexp.MustCompile("[^-?0-9+.?[^0-9]*").ReplaceAllString(args, "")
+	if len(val) < 1 {
 		err := fmt.Errorf("No measurement was provided")
 		fmt.Println(err)
 	}
 	// convert value into an float64 type so we can use it with calculations.
-	fi, _ := strconv.ParseFloat(uv, 64)
-	fi = float64(fi)
-	return uu, fi
+	x, _ := strconv.ParseFloat(val, 64)
+	x = float64(x)
+	// return the parsed measurement and value
+	return uin, x
 }
 
-// Legacy is a print function for imperial and other measurements.
-func legacy(fin float64, fout float64, in string, out string) {
-	symIn := units.Info(in, "sym")
-	name := units.Info(out, "nam")
-	symOut := units.Info(out, "sym")
-	if ceil, floor := math.Ceil(fin), math.Floor(fin); ceil == floor {
-		p("%.0f%s converts to ", fin, symIn)
+// Legacy formats and prints the results of imperial conversions and other measurements.
+func pLegacy(x float64, y float64, uin string, uout string) {
+	symin, symout, nameout := units.Info(uin, "sym"), units.Info(uout, "sym"), units.Info(uout, "nam")
+	calcWhole(x)
+	p("%s converts to ", symin)
+	calcWhole(y)
+	p("%s (%s)\n", symout, nameout)
+}
+
+// Metric formats and prints the results of metric conversions.
+func pMetric(x float64, y float64, uin string, uout string) {
+	symin, symout, nameout := units.Info(uin, "sym"), units.Info(uout, "sym"), units.Info(uout, "nam")
+	calcWhole(x)
+	p("%s equals to ", symin)
+	calcPrefix(y, 24, "Y", symout)
+	calcPrefix(y, 21, "Z", symout)
+	calcPrefix(y, 18, "E", symout)
+	calcPrefix(y, 15, "P", symout)
+	calcPrefix(y, 12, "T", symout)
+	calcPrefix(y, 9, "G", symout)
+	calcPrefix(y, 6, "M", symout)
+	calcPrefix(y, 3, "k", symout)
+	p("%.0f%s ", y, symout)
+	if y > 1 {
+		p("(%ss)\n", nameout)
 	} else {
-		p("%.1f%s converts to ", fin, symIn)
-	}
-	if ceil, floor := math.Ceil(fout), math.Floor(fout); ceil == floor {
-		p("%.0f%s (%s)\n", fout, symOut, name)
-	} else {
-		p("%.1f%s (%s)\n", fout, symOut, name)
+		p("(%s)\n", nameout)
 	}
 }
 
-// Metric is a print function for metric measurements.
-func metric(fin float64, fout float64, in string, out string) {
-	symIn := units.Info(in, "sym")
-	name := units.Info(out, "nam")
-	symOut := units.Info(out, "sym")
-	if ceil, floor := math.Ceil(fin), math.Floor(fin); ceil == floor {
-		p("%.0f%s equals in %ss\n", fin, symIn, name)
-	} else {
-		p("%.1f%s equals in %ss\n", fin, symIn, name)
+// calcPrefix calculates and prints a metric prefix, using a
+// supplied number, exponent, factor symbol and unit symbol.
+func calcPrefix(x float64, e int, fs string, us string) {
+	if y := x / math.Pow10(e); y > 1 && y < 10 {
+		p("%.1f%s%s, ", y, fs, us)
+	} else if y > 1 {
+		p("%.0f%s%s, ", y, fs, us)
 	}
-	prefix(fout, symOut)
 }
 
-// Prefix is a print function for metric prefixes that are applied
-// to measurements.
-func prefix(unit float64, measure string) {
-	if calc := unit / math.Pow10(12); calc > 1 && calc < 10 {
-		p("%.1fT%s, ", calc, measure)
-	} else if calc > 1 {
-		p("%.fT%s, ", calc, measure)
+// calcWhole determines if a float value should display as a decimal value
+// or as a more readable whole number.
+func calcWhole(x float64) {
+	if ceil, floor := math.Ceil(x), math.Floor(x); ceil == floor {
+		p("%.0f", x)
+	} else {
+		p("%.1f", x)
 	}
-	if calc := unit / math.Pow10(9); calc > 1 && calc < 10 {
-		p("%.1fG%s, ", calc, measure)
-	} else if calc > 1 {
-		p("%.fG%s, ", calc, measure)
+}
+
+// phelp prints the end user help.
+func pHelp() {
+	p("conv is a tool that converts common use units of measurements.\n\n")
+	p("Usage:\n\tconv measurement unit\n\n")
+	p("Example:\n\tconv 100f\n\n")
+	p("\t100.0 °F converts to 37.8 °C (Celsius)\n\n")
+	// dynamically generate this help?
+	//p("The %s units are:\n\n", units.Info("f", "cat"))
+	p("The permitted units are:\n\n")
+	slice := []string{"c", "f", "w", "hp"}
+	pHelpT(slice)
+	/* Please keep this as it is a requirement of the CC licence. */
+	p("\nCreated by Ben Garrett as a learning project for Go (lang).\n")
+	p("Personal: <http://bens.zone> Source: <https://github.com/bengarrett/conv>\n")
+}
+
+// pHelpT is a template used by the phelp function to print permitted units.
+func pHelpT(s []string) {
+	for _, u := range s {
+		p("\t%s\t%s (%s)\n", u, units.Info(u, "sym"), units.Info(u, "nam"))
 	}
-	if calc := unit / math.Pow10(6); calc > 1 && calc < 10 {
-		p("%.1fM%s, ", calc, measure)
-	} else if calc > 1 {
-		p("%.fM%s, ", calc, measure)
-	}
-	if calc := unit / math.Pow10(3); calc > 1 && calc < 10 {
-		p("%.1fk%s, ", calc, measure)
-	} else if calc > 1 {
-		p("%.fk%s, ", calc, measure)
-	}
-	p("%.0f%s\n", unit, measure)
 }

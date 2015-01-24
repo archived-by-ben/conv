@@ -22,7 +22,7 @@
 * sqyard <> sqm
 
 ### Volume quantity
-Maybe seperate these into liquids?
+Maybe separate these into liquids?
 * barrel (petroleum) <> 
 * cubic foot
 * cubic inch
@@ -36,14 +36,14 @@ Maybe seperate these into liquids?
 * quart
 * pony
 
-### Mass quantity
+### ~~Mass quantity~~
 * carat
 * gram
 * ounce
 * pound
 * stone
 
-### Speed
+### ~~Speed~~
 * km/h
 * miles/h
 * metres/second

@@ -6,9 +6,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/bengarrett/conv/siin"
-	"github.com/bengarrett/conv/siout"
-	"github.com/bengarrett/conv/units"
+	"github.com/bengarrett/conv/common"
+	"github.com/bengarrett/conv/si"
+	"github.com/bengarrett/conv/symbols"
 	"math"
 	"os"
 	"regexp"
@@ -23,6 +23,7 @@ var (
 
 // Init checks for the existence of user arguments otherwise the help is displayed.
 func init() {
+	ver := "0.1"
 	// no arguments provided
 	if len(os.Args) < 2 {
 		err := fmt.Errorf("No measurement or unit were provided")
@@ -35,6 +36,10 @@ func init() {
 	case "-h", "--help", "/?":
 		pHelp()
 		os.Exit(0)
+	case "-v", "--version", "/v":
+		p("conv %s\n", ver)
+		pCopyright()
+		os.Exit(0)
 	}
 }
 
@@ -43,17 +48,68 @@ func main() {
 	uin, x := input()
 	switch uin {
 	case "f":
-		y = siin.Celsius(siout.Fahrenheit(x))
+		y = si.Celsius(common.Fahrenheit(x))
 		pLegacy(x, y, uin, "c")
 	case "c":
-		y = siin.Fahrenheit(siout.Celsius(x))
+		y = si.Fahrenheit(common.Celsius(x))
 		pLegacy(x, y, uin, "f")
 	case "hp":
-		y = siin.Watt(siout.Horsepower(x))
+		y = si.Watt(common.Horsepower(x))
 		pMetric(x, y, uin, "w")
 	case "w":
-		y = siin.Horsepower(siout.Watt(x))
+		y = si.Horsepower(common.Watt(x))
 		pLegacy(x, y, uin, "hp")
+	case "kph", "kmh":
+		y = si.Mph(common.Kmh(x))
+		pLegacy(x, y, uin, "mph")
+		pSupplement(common.Kmh(x), "mps")
+		pSupplement(si.Kn(common.Kmh(x)), "kn")
+		p("\n")
+	case "ct":
+		y = si.Gram(common.Carat(x))
+		pMetric(x, y, uin, "g")
+	case "g":
+		y = si.Ounce(common.Gram(x))
+		pLegacy(x, y, uin, "oz")
+		if y = si.Pound(common.Gram(x)); y > 0.05 {
+			p("And also ")
+			pSupplement(y, "lb")
+			if y = si.Stone(common.Gram(x)); y > 0.05 {
+				pSupplement(y, "st")
+			}
+			p("\n")
+		}
+	case "oz":
+		y = si.Gram(common.Ounce(x))
+		pMetric(x, y, uin, "g")
+		if y = si.Pound(common.Ounce(x)); y > 0.05 {
+			p("And also ")
+			pSupplement(y, "lb")
+			if y = si.Stone(common.Ounce(x)); y > 0.05 {
+				pSupplement(y, "st")
+			}
+			p("\n")
+		}
+	case "lb":
+		y = si.Gram(common.Pound(x))
+		pMetric(x, y, uin, "g")
+		p("And also ")
+		if y = si.Stone(common.Pound(x)); y > 0.05 {
+			pSupplement(y, "st")
+		}
+		y = si.Ounce(common.Pound(x))
+		pSupplement(y, "oz")
+		p("\n")
+	case "st":
+		y = si.Gram(common.Stone(x))
+		pMetric(x, y, uin, "g")
+		p("And also ")
+		if y = si.Pound(common.Stone(x)); y > 0.05 {
+			pSupplement(y, "lb")
+		}
+		y = si.Ounce(common.Stone(x))
+		pSupplement(y, "oz")
+		p("\n")
 	default:
 		err := fmt.Errorf("The unit type '%s' does not exist", uin)
 		fmt.Println(err)
@@ -86,20 +142,23 @@ func input() (string, float64) {
 	return uin, x
 }
 
+// Supplement formats and prints the results of imperial conversions and other measurements.
+func pSupplement(x float64, uout string) {
+	symout, nameout := symbols.Info(uout, "sym"), symbols.Info(uout, "nam")
+	p("%s%s (%s)\t", fmtWhole(x), symout, nameout)
+}
+
 // Legacy formats and prints the results of imperial conversions and other measurements.
 func pLegacy(x float64, y float64, uin string, uout string) {
-	symin, symout, nameout := units.Info(uin, "sym"), units.Info(uout, "sym"), units.Info(uout, "nam")
-	calcWhole(x)
-	p("%s converts to ", symin)
-	calcWhole(y)
-	p("%s (%s)\n", symout, nameout)
+	symin, symout, nameout := symbols.Info(uin, "sym"), symbols.Info(uout, "sym"), symbols.Info(uout, "nam")
+	p("%s%s converts to ", fmtWhole(x), symin)
+	p("%s%s (%s)\n", fmtWhole(y), symout, nameout)
 }
 
 // Metric formats and prints the results of metric conversions.
 func pMetric(x float64, y float64, uin string, uout string) {
-	symin, symout, nameout := units.Info(uin, "sym"), units.Info(uout, "sym"), units.Info(uout, "nam")
-	calcWhole(x)
-	p("%s equals to ", symin)
+	symin, symout, nameout := symbols.Info(uin, "sym"), symbols.Info(uout, "sym"), symbols.Info(uout, "nam")
+	p("%s%s equals to ", fmtWhole(x), symin)
 	calcPrefix(y, 24, "Y", symout)
 	calcPrefix(y, 21, "Z", symout)
 	calcPrefix(y, 18, "E", symout)
@@ -126,14 +185,13 @@ func calcPrefix(x float64, e int, fs string, us string) {
 	}
 }
 
-// calcWhole determines if a float value should display as a decimal value
+// fmtWhole determines if a float value should display as a decimal value
 // or as a more readable whole number.
-func calcWhole(x float64) {
+func fmtWhole(x float64) string {
 	if ceil, floor := math.Ceil(x), math.Floor(x); ceil == floor {
-		p("%.0f", x)
-	} else {
-		p("%.1f", x)
+		return fmt.Sprintf("%.0f", x)
 	}
+	return fmt.Sprintf("%.1f", x)
 }
 
 // phelp prints the end user help.
@@ -145,16 +203,23 @@ func pHelp() {
 	// dynamically generate this help?
 	//p("The %s units are:\n\n", units.Info("f", "cat"))
 	p("The permitted units are:\n\n")
-	slice := []string{"c", "f", "w", "hp"}
+	slice := []string{"c", "f", "w", "hp", "kph", "mph", "ct", "oz"}
 	pHelpT(slice)
-	/* Please keep this as it is a requirement of the CC licence. */
 	p("\nCreated by Ben Garrett as a learning project for Go (lang).\n")
-	p("Personal: <http://bens.zone> Source: <https://github.com/bengarrett/conv>\n")
+	p("Source: <https://github.com/bengarrett/conv>\n")
+	pCopyright()
 }
 
 // pHelpT is a template used by the phelp function to print permitted units.
 func pHelpT(s []string) {
 	for _, u := range s {
-		p("\t%s\t%s (%s)\n", u, units.Info(u, "sym"), units.Info(u, "nam"))
+		p("\t%s\t%s (%s)\n", u, symbols.Info(u, "sym"), symbols.Info(u, "nam"))
 	}
+}
+
+func pCopyright() {
+	/* Please keep this as it is a requirement of the MIT licence. */
+	p("\n\tThe MIT License (MIT)\n")
+	p("\tCopyright © 2015 Ben Garrett.\n")
+	p("\t<http://choosealicense.com/licenses/mit/>\n")
 }

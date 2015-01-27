@@ -33,7 +33,22 @@ var (
 	st  = unit{"stone", " st"}
 	w   = unit{"watts", " W"}
 	yd  = unit{"yards", " yd"}
+
+	cum  = unit{"cubic metre", "m3"}
+	bl   = unit{"petroleum barrel", "bl"}
+	gimp = unit{"gallon (imp)", "gal"}
+	gus  = unit{"gallon (us)", "gal"}
 )
+
+/*
+* barrel (petroleum)
+* gallon
+* litre
+* ounce
+* pint
+* quart
+* pony
+ */
 
 // Info extracts data from the collection of unit data.
 // Here it fetches the row of data then uses Extr to fetch

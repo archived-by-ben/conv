@@ -25,18 +25,17 @@ func TestRound(t *testing.T) {
 	}
 }
 
-func TestFahrenheit(t *testing.T) {
+func TestCarat(t *testing.T) {
 	cases := []struct {
 		in, want float64
 	}{
-		{100, -279.67},
-		{0, -459.67},
-		{-44, -538.87},
+		{0, 0},
+		{2, 10},
 	}
 	for _, c := range cases {
-		got := Fahrenheit(c.in)
+		got := Carat(c.in)
 		if got != c.want {
-			t.Errorf("Fahrenheit(%q) == %q, want %q", c.in, got, c.want)
+			t.Errorf("Carat(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -57,6 +56,56 @@ func TestCelsius(t *testing.T) {
 	}
 }
 
+func TestCentimetre(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 100},
+		{10.5, 1050},
+		{100, 10000},
+	}
+	for _, c := range cases {
+		got := Centimetre(c.in)
+		if got != c.want {
+			t.Errorf("Centimetre(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestFahrenheit(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{100, -279.67},
+		{0, -459.67},
+		{-44, -538.87},
+	}
+	for _, c := range cases {
+		got := Fahrenheit(c.in)
+		if got != c.want {
+			t.Errorf("Fahrenheit(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestFoot(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 3.280839895013123},
+		{11.1, 36.41732283464567},
+	}
+	for _, c := range cases {
+		got :=
+			Foot(c.in)
+		if got != c.want {
+			t.Errorf("Foot(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
 func TestHorsepower(t *testing.T) {
 	cases := []struct {
 		in, want float64
@@ -73,18 +122,36 @@ func TestHorsepower(t *testing.T) {
 	}
 }
 
-func TestWatt(t *testing.T) {
+func TestInch(t *testing.T) {
 	cases := []struct {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 1},
-		{100.1, 100.1},
+		{1, 39.37007874015748},
+		{100, 3937.0078740157483},
+		{100.5, 3956.692913385827},
 	}
 	for _, c := range cases {
-		got := Watt(c.in)
+		got := Inch(c.in)
 		if got != c.want {
-			t.Errorf("Watt(%q) == %q, want %q", c.in, got, c.want)
+			t.Errorf("Inch(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestKilometre(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1.1, 0.0011},
+		{1001, 1.001},
+	}
+	for _, c := range cases {
+		got :=
+			Kilometre(c.in)
+		if got != c.want {
+			t.Errorf("Kilometre(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -104,21 +171,6 @@ func TestKmh(t *testing.T) {
 	}
 }
 
-func TestMph(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{10, 22.369362920544024},
-	}
-	for _, c := range cases {
-		got := Mph(c.in)
-		if got != c.want {
-			t.Errorf("Mph(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
 func TestKn(t *testing.T) {
 	cases := []struct {
 		in, want float64
@@ -130,6 +182,56 @@ func TestKn(t *testing.T) {
 		got := Kn(c.in)
 		if got != c.want {
 			t.Errorf("Kn(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMetre(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 1},
+		{1.1, 1.1},
+	}
+	for _, c := range cases {
+		got :=
+			Metre(c.in)
+		if got != c.want {
+			t.Errorf("Metre(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMile(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 0.0006213711922373339},
+		{1.1, 0.0006835083114610674},
+		{1609.344, 1},
+	}
+	for _, c := range cases {
+		got :=
+			Mile(c.in)
+		if got != c.want {
+			t.Errorf("Mile(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMph(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{10, 22.369362920544024},
+	}
+	for _, c := range cases {
+		got := Mph(c.in)
+		if got != c.want {
+			t.Errorf("Mph(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -149,17 +251,19 @@ func TestMps(t *testing.T) {
 	}
 }
 
-func TestCarat(t *testing.T) {
+func TestNautical(t *testing.T) {
 	cases := []struct {
 		in, want float64
 	}{
 		{0, 0},
-		{2, 10},
+		{1.1, 0.0005939524838012959},
+		{15000, 8.099352051835853},
 	}
 	for _, c := range cases {
-		got := Carat(c.in)
+		got :=
+			Nautical(c.in)
 		if got != c.want {
-			t.Errorf("Carat(%q) == %q, want %q", c.in, got, c.want)
+			t.Errorf("Nautical(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -215,36 +319,18 @@ func TestStone(t *testing.T) {
 	}
 }
 
-func TestCentimetre(t *testing.T) {
+func TestWatt(t *testing.T) {
 	cases := []struct {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 100},
-		{10.5, 1050},
-		{100, 10000},
+		{1, 1},
+		{100.1, 100.1},
 	}
 	for _, c := range cases {
-		got := Centimetre(c.in)
+		got := Watt(c.in)
 		if got != c.want {
-			t.Errorf("Centimetre(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestInch(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{1, 39.37007874015748},
-		{100, 3937.0078740157483},
-		{100.5, 3956.692913385827},
-	}
-	for _, c := range cases {
-		got := Inch(c.in)
-		if got != c.want {
-			t.Errorf("Inch(%q) == %q, want %q", c.in, got, c.want)
+			t.Errorf("Watt(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -262,92 +348,6 @@ func TestYard(t *testing.T) {
 			Yard(c.in)
 		if got != c.want {
 			t.Errorf("Yard(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestFoot(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{1, 3.280839895013123},
-		{11.1, 36.41732283464567},
-	}
-	for _, c := range cases {
-		got :=
-			Foot(c.in)
-		if got != c.want {
-			t.Errorf("Foot(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMetre(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{1, 1},
-		{1.1, 1.1},
-	}
-	for _, c := range cases {
-		got :=
-			Metre(c.in)
-		if got != c.want {
-			t.Errorf("Metre(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestKilometre(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{1.1, 0.0011},
-		{1001, 1.001},
-	}
-	for _, c := range cases {
-		got :=
-			Kilometre(c.in)
-		if got != c.want {
-			t.Errorf("Kilometre(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMile(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{1, 0.0006213711922373339},
-		{1.1, 0.0006835083114610674},
-		{1609.344, 1},
-	}
-	for _, c := range cases {
-		got :=
-			Mile(c.in)
-		if got != c.want {
-			t.Errorf("Mile(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNautical(t *testing.T) {
-	cases := []struct {
-		in, want float64
-	}{
-		{0, 0},
-		{1.1, 0.0005939524838012959},
-		{15000, 8.099352051835853},
-	}
-	for _, c := range cases {
-		got :=
-			Nautical(c.in)
-		if got != c.want {
-			t.Errorf("Nautical(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }

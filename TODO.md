@@ -1,19 +1,17 @@
 #TODO
 
-### Power quantity
-* ~~Convert horsepower to kilowatts, vv.~~
+### ~~Power quantity~~
+* Convert horsepower to kilowatts, vv
 
-### Distance quantity
-* cm <> inch
-* metres <> yards
-* metres <> foot
-* km <> miles
-* km <> nautical mile
-
-### Distance in space quantity
-* ly <> km
-* ly <> parsec
-* km <> parsec
+### ~~Distance quantity~~
+* cm
+* inch
+* yards
+* foot
+* metres
+* km
+* miles
+* nautical mile
 
 ### Area quantity
 * acre <> sqkm
@@ -21,14 +19,8 @@
 * sqmile <> sqkm
 * sqyard <> sqm
 
-### Volume quantity
-Maybe separate these into liquids?
-* barrel (petroleum) <> 
-* cubic foot
-* cubic inch
-* cubic metre
-* cubic mile
-* cubic yard
+### Liquid quantity
+* barrel (petroleum)
 * gallon
 * litre
 * ounce

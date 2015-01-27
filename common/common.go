@@ -2,6 +2,10 @@
 // into units of SI (International System).
 package common
 
+import (
+	"math"
+)
+
 func Fahrenheit(x float64) float64 {
 	return (x + 459.67) * 5 / 9
 }
@@ -34,14 +38,6 @@ func Mps(x float64) float64 {
 	return x
 }
 
-/*
-* carat
-* gram
-* ounce
-* pound
-* stone
- */
-
 func Carat(x float64) float64 {
 	return x * 0.2
 }
@@ -56,4 +52,29 @@ func Pound(x float64) float64 {
 }
 func Stone(x float64) float64 {
 	return x * 6350.29318
+}
+
+func Centimetre(x float64) float64 {
+	return x * 0.01
+}
+func Inch(x float64) float64 {
+	return x * 0.0254
+}
+func Yard(x float64) float64 {
+	return x * 0.9144
+}
+func Foot(x float64) float64 {
+	return x * 0.3048
+}
+func Metre(x float64) float64 {
+	return x
+}
+func Kilometre(x float64) float64 {
+	return x * 1000
+}
+func Mile(x float64) float64 {
+	return x * 1609.344
+}
+func Nautical(x float64) float64 {
+	return x * 1852
 }

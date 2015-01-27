@@ -40,79 +40,142 @@ func init() {
 		p("conv %s\n", ver)
 		pCopyright()
 		os.Exit(0)
+	case "-x":
+		/* Test functions argument (delete before making public) */
+		fmt.Println("experimental mode:")
+		//symbols.Test()
+		os.Exit(0)
 	}
 }
 
-// Handle user input then calculate and display any conversions.
+// Handle user input then calculate and print all conversions.
 func main() {
-	uin, x := input()
-	switch uin {
+	m, x := input()
+	pResults(m, x)
+	p("\n")
+}
+
+func pResults(m string, x float64) {
+	switch m {
 	case "f":
 		y = si.Celsius(common.Fahrenheit(x))
-		pLegacy(x, y, uin, "c")
+		pLegacy(x, y, m, "c")
 	case "c":
 		y = si.Fahrenheit(common.Celsius(x))
-		pLegacy(x, y, uin, "f")
+		pLegacy(x, y, m, "f")
 	case "hp":
 		y = si.Watt(common.Horsepower(x))
-		pMetric(x, y, uin, "w")
+		pMetric(x, y, m, "w")
 	case "w":
 		y = si.Horsepower(common.Watt(x))
-		pLegacy(x, y, uin, "hp")
+		pLegacy(x, y, m, "hp")
 	case "kph", "kmh":
 		y = si.Mph(common.Kmh(x))
-		pLegacy(x, y, uin, "mph")
+		pLegacy(x, y, m, "mph")
 		pSupplement(common.Kmh(x), "mps")
 		pSupplement(si.Kn(common.Kmh(x)), "kn")
-		p("\n")
 	case "ct":
 		y = si.Gram(common.Carat(x))
-		pMetric(x, y, uin, "g")
+		pMetric(x, y, m, "g")
 	case "g":
 		y = si.Ounce(common.Gram(x))
-		pLegacy(x, y, uin, "oz")
+		pLegacy(x, y, m, "oz")
 		if y = si.Pound(common.Gram(x)); y > 0.05 {
 			p("And also ")
 			pSupplement(y, "lb")
 			if y = si.Stone(common.Gram(x)); y > 0.05 {
 				pSupplement(y, "st")
 			}
-			p("\n")
 		}
 	case "oz":
 		y = si.Gram(common.Ounce(x))
-		pMetric(x, y, uin, "g")
+		pMetric(x, y, m, "g")
 		if y = si.Pound(common.Ounce(x)); y > 0.05 {
 			p("And also ")
 			pSupplement(y, "lb")
 			if y = si.Stone(common.Ounce(x)); y > 0.05 {
 				pSupplement(y, "st")
 			}
-			p("\n")
 		}
 	case "lb":
 		y = si.Gram(common.Pound(x))
-		pMetric(x, y, uin, "g")
+		pMetric(x, y, m, "g")
 		p("And also ")
 		if y = si.Stone(common.Pound(x)); y > 0.05 {
 			pSupplement(y, "st")
 		}
 		y = si.Ounce(common.Pound(x))
 		pSupplement(y, "oz")
-		p("\n")
 	case "st":
 		y = si.Gram(common.Stone(x))
-		pMetric(x, y, uin, "g")
+		pMetric(x, y, m, "g")
 		p("And also ")
 		if y = si.Pound(common.Stone(x)); y > 0.05 {
 			pSupplement(y, "lb")
 		}
 		y = si.Ounce(common.Stone(x))
 		pSupplement(y, "oz")
-		p("\n")
+	case "cm", "m", "km", "in", "ft", "yd", "mi", "nm":
+		switch m {
+		case "cm":
+			y = si.Inch(common.Centimetre(x))
+			pLegacy(x, y, m, "in")
+			y = si.Metre(common.Centimetre(x))
+		case "m":
+			y = si.Yard(common.Metre(x))
+			pLegacy(x, y, m, "yd")
+			y = x
+		case "km":
+			y = si.Mile(common.Kilometre(x))
+			pMetric(x, y, m, "mi")
+			y = si.Metre(common.Kilometre(x))
+		case "in":
+			y = si.Metre(common.Inch(x))
+			pMetric(x, y, m, "m")
+		case "ft":
+			y = si.Metre(common.Foot(x))
+			pMetric(x, y, m, "m")
+		case "yd":
+			y = si.Metre(common.Yard(x))
+			pMetric(x, y, m, "m")
+		case "mi":
+			y = si.Kilometre(common.Mile(x))
+			pMetric(x, y, m, "km")
+			y = si.Metre(common.Mile(x))
+		case "nm":
+			y = si.Kilometre(common.Nautical(x))
+			pMetric(x, y, m, "km")
+			y = si.Metre(common.Nautical(x))
+		}
+		if m != "m" {
+			x = y
+		}
+		p("\nAnd also")
+		if y = si.Nautical(common.Metre(x)); m != "nm" && y >= 0.1 {
+			pSupplement(y, "nm")
+		}
+		if y = si.Mile(common.Metre(x)); m != "mi" && m != "km" && y >= 0.1 {
+			pSupplement(y, "mi")
+		}
+		if y = si.Yard(common.Metre(x)); m != "yd" && y >= 0.1 {
+			pSupplement(y, "yd")
+		}
+		if y = si.Foot(common.Metre(x)); m != "ft" && y >= 0.1 {
+			pSupplement(y, "ft")
+		}
+		if m != "in" && m != "cm" {
+			y = si.Inch(common.Metre(x))
+			pSupplement(y, "in")
+		}
 	default:
-		err := fmt.Errorf("The unit type '%s' does not exist", uin)
-		fmt.Println(err)
+		if len(m) > 1 {
+			err := fmt.Errorf("The unit type '%s' does not exist", m)
+			fmt.Println(err)
+		} else {
+			err := fmt.Errorf("No unit type was supplied")
+			fmt.Println(err)
+		}
+		os.Exit(0)
 	}
 }
 
@@ -128,7 +191,7 @@ func input() (string, float64) {
 	args := strings.Join(s, "")
 	args = strings.ToLower(args)
 	// create a reg expression to replace all non-alphabetic characters
-	uin := regexp.MustCompile("[^a-z]").ReplaceAllString(args, "")
+	m := regexp.MustCompile("[^a-z]").ReplaceAllString(args, "")
 	// create reg expression to removal anything that isn't a number, decimal or sign
 	val := regexp.MustCompile("[^-?0-9+.?[^0-9]*").ReplaceAllString(args, "")
 	if len(val) < 1 {
@@ -139,26 +202,25 @@ func input() (string, float64) {
 	x, _ := strconv.ParseFloat(val, 64)
 	x = float64(x)
 	// return the parsed measurement and value
-	return uin, x
+	return m, x
 }
 
-// Supplement formats and prints the results of imperial conversions and other measurements.
+// Supplement formats and prints the results of imperial and other measurement conversions.
 func pSupplement(x float64, uout string) {
 	symout, nameout := symbols.Info(uout, "sym"), symbols.Info(uout, "nam")
-	p("%s%s (%s)\t", fmtWhole(x), symout, nameout)
+	p(", %s%s (%s)", si.Round(x), symout, nameout)
 }
 
 // Legacy formats and prints the results of imperial conversions and other measurements.
 func pLegacy(x float64, y float64, uin string, uout string) {
 	symin, symout, nameout := symbols.Info(uin, "sym"), symbols.Info(uout, "sym"), symbols.Info(uout, "nam")
-	p("%s%s converts to ", fmtWhole(x), symin)
-	p("%s%s (%s)\n", fmtWhole(y), symout, nameout)
+	p("%s%s is about %s%s (%s)", si.Round(x), symin, si.Round(y), symout, nameout)
 }
 
 // Metric formats and prints the results of metric conversions.
 func pMetric(x float64, y float64, uin string, uout string) {
 	symin, symout, nameout := symbols.Info(uin, "sym"), symbols.Info(uout, "sym"), symbols.Info(uout, "nam")
-	p("%s%s equals to ", fmtWhole(x), symin)
+	p("%s%s is around ", si.Round(x), symin)
 	calcPrefix(y, 24, "Y", symout)
 	calcPrefix(y, 21, "Z", symout)
 	calcPrefix(y, 18, "E", symout)
@@ -167,43 +229,25 @@ func pMetric(x float64, y float64, uin string, uout string) {
 	calcPrefix(y, 9, "G", symout)
 	calcPrefix(y, 6, "M", symout)
 	calcPrefix(y, 3, "k", symout)
-	p("%.0f%s ", y, symout)
-	if y > 1 {
-		p("(%ss)\n", nameout)
-	} else {
-		p("(%s)\n", nameout)
-	}
+	p("%s%s (%s)", si.Round(y), symout, nameout)
 }
 
 // calcPrefix calculates and prints a metric prefix, using a
 // supplied number, exponent, factor symbol and unit symbol.
 func calcPrefix(x float64, e int, fs string, us string) {
 	if y := x / math.Pow10(e); y > 1 && y < 10 {
-		p("%.1f%s%s, ", y, fs, us)
-	} else if y > 1 {
-		p("%.0f%s%s, ", y, fs, us)
+		p("%s%s%s, ", si.Round(y), fs, us)
 	}
-}
-
-// fmtWhole determines if a float value should display as a decimal value
-// or as a more readable whole number.
-func fmtWhole(x float64) string {
-	if ceil, floor := math.Ceil(x), math.Floor(x); ceil == floor {
-		return fmt.Sprintf("%.0f", x)
-	}
-	return fmt.Sprintf("%.1f", x)
 }
 
 // phelp prints the end user help.
 func pHelp() {
+	slice := []string{"c", "f", "hp", "w", "kph", "mph", "kn", "mps", "ct", "g", "oz", "lb", "st", "cm", "in", "yd", "ft", "m", "km", "mi", "nm", "ly", "pc"}
 	p("conv is a tool that converts common use units of measurements.\n\n")
 	p("Usage:\n\tconv measurement unit\n\n")
 	p("Example:\n\tconv 100f\n\n")
-	p("\t100.0 °F converts to 37.8 °C (Celsius)\n\n")
-	// dynamically generate this help?
-	//p("The %s units are:\n\n", units.Info("f", "cat"))
+	p("\t100 °F converts to 37.8 °C (Celsius)\n\n")
 	p("The permitted units are:\n\n")
-	slice := []string{"c", "f", "w", "hp", "kph", "mph", "ct", "oz"}
 	pHelpT(slice)
 	p("\nCreated by Ben Garrett as a learning project for Go (lang).\n")
 	p("Source: <https://github.com/bengarrett/conv>\n")
@@ -213,7 +257,7 @@ func pHelp() {
 // pHelpT is a template used by the phelp function to print permitted units.
 func pHelpT(s []string) {
 	for _, u := range s {
-		p("\t%s\t%s (%s)\n", u, symbols.Info(u, "sym"), symbols.Info(u, "nam"))
+		p("\t%s\t%s \t%s\n", u, strings.TrimSpace(symbols.Info(u, "sym")), symbols.Info(u, "nam"))
 	}
 }
 

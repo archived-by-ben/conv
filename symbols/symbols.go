@@ -14,17 +14,25 @@ type unit struct {
 var (
 	c   = unit{"Celsius", "°C"}
 	f   = unit{"Fahrenheit", "°F"}
-	hp  = unit{"horsepower", "hp"}
-	w   = unit{"watt", "W"}
-	kph = unit{"kilometres per hour", "km/h"}
-	mph = unit{"miles per hour", "mph"}
-	kn  = unit{"knot", "kn"}
+	hp  = unit{"horsepower", " hp"}
+	w   = unit{"watts", " W"}
+	kph = unit{"kilometres per hour", " km/h"}
+	mph = unit{"miles per hour", " mph"}
+	kn  = unit{"knots", "kn"}
 	mps = unit{"metres per second", "m/s"}
-	ct  = unit{"carat", "ct"}
-	g   = unit{"gram", "g"}
-	oz  = unit{"ounce", "oz"}
-	lb  = unit{"pound", "℔"}
-	st  = unit{"stone", "st"}
+	ct  = unit{"carats", " ct"}
+	g   = unit{"grams", " g"}
+	oz  = unit{"ounces", " oz"}
+	lb  = unit{"pounds", " ℔"}
+	st  = unit{"stones", " st"}
+	cm  = unit{"centimetres", "cm"}
+	in  = unit{"inches", "″"}
+	yd  = unit{"yards", " yd"}
+	ft  = unit{"feet", "′"}
+	m   = unit{"metres", "m"}
+	km  = unit{"kilometres", "km"}
+	mi  = unit{"miles", " mi"}
+	nm  = unit{"nautical miles", " NM"}
 )
 
 // Info extracts data from the collection of unit data.
@@ -58,6 +66,22 @@ func Info(unit string, request string) string {
 		return extr(lb, request)
 	case "st":
 		return extr(st, request)
+	case "cm":
+		return extr(cm, request)
+	case "in":
+		return extr(in, request)
+	case "yd":
+		return extr(yd, request)
+	case "ft":
+		return extr(ft, request)
+	case "m":
+		return extr(m, request)
+	case "km":
+		return extr(km, request)
+	case "mi":
+		return extr(mi, request)
+	case "nm":
+		return extr(nm, request)
 	}
 	err := fmt.Errorf("the unit %s is cannot be found", unit)
 	return fmt.Sprint(err)

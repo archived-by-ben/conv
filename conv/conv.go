@@ -77,44 +77,39 @@ func pResults(m string, x float64) {
 	case "ct":
 		y = si.Gram(common.Carat(x))
 		pMetric(x, y, m, "g")
-	case "g":
-		y = si.Ounce(common.Gram(x))
-		pLegacy(x, y, m, "oz")
-		if y = si.Pound(common.Gram(x)); y > 0.05 {
-			p("And also ")
-			pSupplement(y, "lb")
-			if y = si.Stone(common.Gram(x)); y > 0.05 {
-				pSupplement(y, "st")
-			}
+	case "g", "oz", "lb", "st":
+		// TODO: Add support for kg
+		switch m {
+		case "g":
+			y = si.Ounce(common.Gram(x))
+			pLegacy(x, y, m, "oz")
+		case "oz":
+			y = si.Gram(common.Ounce(x))
+			pMetric(x, y, m, "g")
+			x = y
+		case "lb":
+			y = si.Gram(common.Pound(x))
+			pMetric(x, y, m, "g")
+			x = y
+		case "st":
+			y = si.Gram(common.Stone(x))
+			pMetric(x, y, m, "g")
+			x = y
 		}
-	case "oz":
-		y = si.Gram(common.Ounce(x))
-		pMetric(x, y, m, "g")
-		if y = si.Pound(common.Ounce(x)); y > 0.05 {
-			p("And also ")
-			pSupplement(y, "lb")
-			if y = si.Stone(common.Ounce(x)); y > 0.05 {
-				pSupplement(y, "st")
-			}
+		if y = si.Ounce(common.Gram(x)); y >= 0.1 && m != "g" {
+			p("\nAnd also")
+		} else if y = si.Pound(common.Gram(x)); y >= 0.1 && m == "g" {
+			p("\nAnd also")
 		}
-	case "lb":
-		y = si.Gram(common.Pound(x))
-		pMetric(x, y, m, "g")
-		p("And also ")
-		if y = si.Stone(common.Pound(x)); y > 0.05 {
+		if y = si.Pound(common.Gram(x)); m != "lb" && y >= 0.1 {
+			pSupplement(y, "lb")
+		}
+		if y = si.Stone(common.Gram(x)); m != "st" && y >= 0.1 {
 			pSupplement(y, "st")
 		}
-		y = si.Ounce(common.Pound(x))
-		pSupplement(y, "oz")
-	case "st":
-		y = si.Gram(common.Stone(x))
-		pMetric(x, y, m, "g")
-		p("And also ")
-		if y = si.Pound(common.Stone(x)); y > 0.05 {
-			pSupplement(y, "lb")
+		if y = si.Ounce(common.Gram(x)); m != "g" && m != "oz" {
+			pSupplement(y, "oz")
 		}
-		y = si.Ounce(common.Stone(x))
-		pSupplement(y, "oz")
 	case "cm", "m", "km", "in", "ft", "yd", "mi", "nm":
 		switch m {
 		case "cm":
@@ -242,7 +237,7 @@ func calcPrefix(x float64, e int, fs string, us string) {
 
 // phelp prints the end user help.
 func pHelp() {
-	slice := []string{"c", "f", "hp", "w", "kph", "mph", "kn", "mps", "ct", "g", "oz", "lb", "st", "cm", "in", "yd", "ft", "m", "km", "mi", "nm", "ly", "pc"}
+	slice := []string{"c", "cm", "ct", "f", "ft", "g", "hp", "in", "km", "kn", "kph", "lb", "m", "mph", "mps", "mi", "nm", "oz", "st", "w", "yd"}
 	p("conv is a tool that converts common use units of measurements.\n\n")
 	p("Usage:\n\tconv measurement unit\n\n")
 	p("Example:\n\tconv 100f\n\n")

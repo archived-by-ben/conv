@@ -52,18 +52,22 @@ func Mps(x float64) float64 {
 func Carat(x float64) float64 {
 	return x / 0.2
 }
+
+/****************/
 func Gram(x float64) float64 {
 	return x
 }
 func Ounce(x float64) float64 {
-	return x * 28
+	return x / 28
 }
 func Pound(x float64) float64 {
-	return x * 453.59237
+	return x / 453.59237
 }
 func Stone(x float64) float64 {
-	return x * 6350.29318
+	return x / 6350.29318
 }
+
+/****************/
 
 func Centimetre(x float64) float64 {
 	return x * 100

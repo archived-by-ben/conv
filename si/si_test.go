@@ -169,7 +169,9 @@ func TestOunce(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 28},
+		{28, 1},
+		{500, 17.857142857142858},
+		{222.222, 7.9365000000000006},
 	}
 	for _, c := range cases {
 		got := Ounce(c.in)
@@ -184,7 +186,9 @@ func TestPound(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 453.59237},
+		{1, 0.002204622621848776},
+		{500, 1.1023113109243878},
+		{444.4, 0.9797342931495959},
 	}
 	for _, c := range cases {
 		got := Pound(c.in)
@@ -199,7 +203,9 @@ func TestStone(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 6350.29318},
+		{1, 0.00015747304441776972},
+		{11111, 1.7496829965258391},
+		{5555.5, 0.8748414982629196},
 	}
 	for _, c := range cases {
 		got := Stone(c.in)

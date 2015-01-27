@@ -13,26 +13,26 @@ type unit struct {
 // Unit data containing the name, symbol & category.
 var (
 	c   = unit{"Celsius", "°C"}
-	f   = unit{"Fahrenheit", "°F"}
-	hp  = unit{"horsepower", " hp"}
-	w   = unit{"watts", " W"}
-	kph = unit{"kilometres per hour", " km/h"}
-	mph = unit{"miles per hour", " mph"}
-	kn  = unit{"knots", "kn"}
-	mps = unit{"metres per second", "m/s"}
-	ct  = unit{"carats", " ct"}
-	g   = unit{"grams", " g"}
-	oz  = unit{"ounces", " oz"}
-	lb  = unit{"pounds", " ℔"}
-	st  = unit{"stones", " st"}
 	cm  = unit{"centimetres", "cm"}
-	in  = unit{"inches", "″"}
-	yd  = unit{"yards", " yd"}
+	ct  = unit{"carats", " ct"}
+	f   = unit{"Fahrenheit", "°F"}
 	ft  = unit{"feet", "′"}
-	m   = unit{"metres", "m"}
+	g   = unit{"grams", "g"}
+	hp  = unit{"horsepower", " hp"}
+	in  = unit{"inches", "″"}
 	km  = unit{"kilometres", "km"}
+	kn  = unit{"knots", "kn"}
+	kph = unit{"kilometres per hour", " km/h"}
+	lb  = unit{"pounds", " ℔"}
+	m   = unit{"metres", "m"}
 	mi  = unit{"miles", " mi"}
+	mph = unit{"miles per hour", " mph"}
+	mps = unit{"metres per second", "m/s"}
 	nm  = unit{"nautical miles", " NM"}
+	oz  = unit{"ounces", " oz"}
+	st  = unit{"stone", " st"}
+	w   = unit{"watts", " W"}
+	yd  = unit{"yards", " yd"}
 )
 
 // Info extracts data from the collection of unit data.
@@ -42,46 +42,46 @@ func Info(unit string, request string) string {
 	switch unit {
 	case "c":
 		return extr(c, request)
-	case "f":
-		return extr(f, request)
-	case "hp":
-		return extr(hp, request)
-	case "w":
-		return extr(w, request)
-	case "kph":
-		return extr(kph, request)
-	case "mph":
-		return extr(mph, request)
-	case "kn":
-		return extr(kn, request)
-	case "mps":
-		return extr(mps, request)
-	case "ct":
-		return extr(ct, request)
-	case "g":
-		return extr(g, request)
-	case "oz":
-		return extr(oz, request)
-	case "lb":
-		return extr(lb, request)
-	case "st":
-		return extr(st, request)
 	case "cm":
 		return extr(cm, request)
-	case "in":
-		return extr(in, request)
-	case "yd":
-		return extr(yd, request)
+	case "ct":
+		return extr(ct, request)
+	case "f":
+		return extr(f, request)
 	case "ft":
 		return extr(ft, request)
-	case "m":
-		return extr(m, request)
+	case "g":
+		return extr(g, request)
 	case "km":
 		return extr(km, request)
+	case "hp":
+		return extr(hp, request)
+	case "kph":
+		return extr(kph, request)
+	case "kn":
+		return extr(kn, request)
+	case "in":
+		return extr(in, request)
+	case "lb":
+		return extr(lb, request)
+	case "m":
+		return extr(m, request)
 	case "mi":
 		return extr(mi, request)
+	case "mph":
+		return extr(mph, request)
+	case "mps":
+		return extr(mps, request)
 	case "nm":
 		return extr(nm, request)
+	case "st":
+		return extr(st, request)
+	case "oz":
+		return extr(oz, request)
+	case "yd":
+		return extr(yd, request)
+	case "w":
+		return extr(w, request)
 	}
 	err := fmt.Errorf("the unit %s is cannot be found", unit)
 	return fmt.Sprint(err)

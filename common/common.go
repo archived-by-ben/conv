@@ -2,10 +2,6 @@
 // into units of SI (International System).
 package common
 
-import (
-	"math"
-)
-
 func Fahrenheit(x float64) float64 {
 	return (x + 459.67) * 5 / 9
 }

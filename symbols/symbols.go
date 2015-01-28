@@ -12,12 +12,16 @@ type unit struct {
 
 // Unit data containing the name, symbol & category.
 var (
+	bbl = unit{"petroleum barrel", "bbl"}
 	c   = unit{"Celsius", "°C"}
 	cm  = unit{"centimetres", "cm"}
 	ct  = unit{"carats", " ct"}
+	cum = unit{"cubic metre", "m³"}
 	f   = unit{"Fahrenheit", "°F"}
 	ft  = unit{"feet", "′"}
 	g   = unit{"grams", "g"}
+	guk = unit{"imperial gallon", "gal"}
+	gus = unit{"us gallon", "gal"}
 	hp  = unit{"horsepower", " hp"}
 	in  = unit{"inches", "″"}
 	km  = unit{"kilometres", "km"}
@@ -33,16 +37,9 @@ var (
 	st  = unit{"stone", " st"}
 	w   = unit{"watts", " W"}
 	yd  = unit{"yards", " yd"}
-
-	cum  = unit{"cubic metre", "m3"}
-	bl   = unit{"petroleum barrel", "bl"}
-	gimp = unit{"gallon (imp)", "gal"}
-	gus  = unit{"gallon (us)", "gal"}
 )
 
 /*
-* barrel (petroleum)
-* gallon
 * litre
 * ounce
 * pint
@@ -51,10 +48,12 @@ var (
  */
 
 // Info extracts data from the collection of unit data.
-// Here it fetches the row of data then uses Extr to fetch
+// Here it fetches the row of data then uses extr to fetch
 // the piece of data.
 func Info(unit string, request string) string {
 	switch unit {
+	case "bbl":
+		return extr(bbl, request)
 	case "c":
 		return extr(c, request)
 	case "cm":
@@ -67,6 +66,10 @@ func Info(unit string, request string) string {
 		return extr(ft, request)
 	case "g":
 		return extr(g, request)
+	case "guk":
+		return extr(guk, request)
+	case "gus":
+		return extr(gus, request)
 	case "km":
 		return extr(km, request)
 	case "hp":
@@ -81,6 +84,8 @@ func Info(unit string, request string) string {
 		return extr(lb, request)
 	case "m":
 		return extr(m, request)
+	case "cum":
+		return extr(cum, request)
 	case "mi":
 		return extr(mi, request)
 	case "mph":

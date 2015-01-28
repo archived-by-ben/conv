@@ -14,10 +14,11 @@
 * nautical mile
 
 ### Area quantity
-* acre <> sqkm
-* hectare <> sqkm
-* sqmile <> sqkm
-* sqyard <> sqm
+* acre
+* hectare
+* sqkm
+* sqmile
+* sqyard
 
 ### Liquid quantity
 * barrel (petroleum)

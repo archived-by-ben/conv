@@ -2,6 +2,22 @@ package common
 
 import "testing"
 
+func TestBarrel(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 0.158987294928},
+		{55.5, 8.823794868504},
+	}
+	for _, c := range cases {
+		got := Barrel(c.in)
+		if got != c.want {
+			t.Errorf("Barrel(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
 func TestCarat(t *testing.T) {
 	cases := []struct {
 		in, want float64
@@ -80,6 +96,38 @@ func TestFoot(t *testing.T) {
 			Foot(c.in)
 		if got != c.want {
 			t.Errorf("Foot(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestGallonUK(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 0.00454609},
+		{555.555, 2.5256030299499996},
+	}
+	for _, c := range cases {
+		got := GallonUK(c.in)
+		if got != c.want {
+			t.Errorf("GallonUK(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestGallonUS(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 0.003785411784},
+		{555.555, 2.10300444366012},
+	}
+	for _, c := range cases {
+		got := GallonUS(c.in)
+		if got != c.want {
+			t.Errorf("GallonUS(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }

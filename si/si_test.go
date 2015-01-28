@@ -25,6 +25,22 @@ func TestRound(t *testing.T) {
 	}
 }
 
+func TestBarrel(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 6.2898105697751},
+		{2.2, 13.83758325350522},
+	}
+	for _, c := range cases {
+		got := Barrel(c.in)
+		if got != c.want {
+			t.Errorf("Barrel(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
 func TestCarat(t *testing.T) {
 	cases := []struct {
 		in, want float64
@@ -102,6 +118,38 @@ func TestFoot(t *testing.T) {
 			Foot(c.in)
 		if got != c.want {
 			t.Errorf("Foot(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestGallonUK(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 219.96924829908778},
+		{1.1, 241.9661731289966},
+	}
+	for _, c := range cases {
+		got := GallonUK(c.in)
+		if got != c.want {
+			t.Errorf("GallonUK(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestGallonUS(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 264.1720523581484},
+		{1.1, 290.5892575939633},
+	}
+	for _, c := range cases {
+		got := GallonUS(c.in)
+		if got != c.want {
+			t.Errorf("GallonUS(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }

@@ -2,6 +2,10 @@
 // into units of SI (International System).
 package common
 
+func Barrel(x float64) float64 {
+	return x * 0.158987294928
+}
+
 func Carat(x float64) float64 {
 	return x * 0.2
 }
@@ -14,6 +18,10 @@ func Centimetre(x float64) float64 {
 	return x * 0.01
 }
 
+func Cubicmetre(x float64) float64 {
+	return x
+}
+
 func Fahrenheit(x float64) float64 {
 	return (x + 459.67) * 5 / 9
 }
@@ -24,6 +32,14 @@ func Foot(x float64) float64 {
 
 func Gram(x float64) float64 {
 	return x
+}
+
+func GallonUK(x float64) float64 {
+	return x * 0.00454609
+}
+
+func GallonUS(x float64) float64 {
+	return x * 0.003785411784
 }
 
 func Horsepower(x float64) float64 {

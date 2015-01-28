@@ -17,13 +17,13 @@ import (
 )
 
 var (
-	x, y float64
-	p    = fmt.Printf
+	x, y, z float64
+	p       = fmt.Printf
 )
 
 // Init checks for the existence of user arguments otherwise the help is displayed.
 func init() {
-	ver := "0.1"
+	ver := "0.2"
 	// no arguments provided
 	if len(os.Args) < 2 {
 		err := fmt.Errorf("No measurement or unit were provided")
@@ -43,7 +43,6 @@ func init() {
 	case "-x":
 		/* Test functions argument (delete before making public) */
 		fmt.Println("experimental mode:")
-		//symbols.Test()
 		os.Exit(0)
 	}
 }
@@ -162,6 +161,37 @@ func pResults(m string, x float64) {
 			y = si.Inch(common.Metre(x))
 			pSupplement(y, "in")
 		}
+	case "cum", "bbl", "guk", "gus":
+		switch m {
+		case "cum":
+			y = si.GallonUK(common.Cubicmetre(x))
+			z = si.GallonUS(common.Cubicmetre(x))
+			pLegacy(x, y, m, "guk")
+			pSupplement(z, "gus")
+		case "bbl":
+			y = si.Cubicmetre(common.Barrel(x))
+			pLegacy(x, y, m, "cum")
+			x = y
+		case "guk":
+			y = si.Cubicmetre(common.GallonUK(x))
+			pLegacy(x, y, m, "cum")
+			x = y
+		case "gus":
+			y = si.Cubicmetre(common.GallonUS(x))
+			pLegacy(x, y, m, "cum")
+			x = y
+		}
+		p("\nAnd also")
+		if y = si.Barrel(common.Cubicmetre(x)); m != "bbl" && y >= 0.1 {
+			pSupplement(y, "bbl")
+		}
+		if y = si.GallonUK(common.Cubicmetre(x)); m != "guk" && m != "cum" && y >= 0.1 {
+			pSupplement(y, "guk")
+		}
+		if y = si.GallonUS(common.Cubicmetre(x)); m != "gus" && m != "cum" && y >= 0.1 {
+			pSupplement(y, "gus")
+		}
+
 	default:
 		if len(m) > 1 {
 			err := fmt.Errorf("The unit type '%s' does not exist", m)
@@ -237,11 +267,11 @@ func calcPrefix(x float64, e int, fs string, us string) {
 
 // phelp prints the end user help.
 func pHelp() {
-	slice := []string{"c", "cm", "ct", "f", "ft", "g", "hp", "in", "km", "kn", "kph", "lb", "m", "mph", "mps", "mi", "nm", "oz", "st", "w", "yd"}
+	slice := []string{"bbl", "c", "cm", "ct", "cum", "f", "ft", "g", "guk", "gus", "hp", "in", "km", "kn", "kph", "lb", "m", "mph", "mps", "mi", "nm", "oz", "st", "w", "yd"}
 	p("conv is a tool that converts common use units of measurements.\n\n")
 	p("Usage:\n\tconv measurement unit\n\n")
 	p("Example:\n\tconv 100f\n\n")
-	p("\t100 °F converts to 37.8 °C (Celsius)\n\n")
+	p("\t100 °F is about 37.8 °C (Celsius)\n\n")
 	p("The permitted units are:\n\n")
 	pHelpT(slice)
 	p("\nCreated by Ben Garrett as a learning project for Go (lang).\n")

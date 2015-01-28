@@ -27,6 +27,7 @@ var (
 	km  = unit{"kilometres", "km"}
 	kn  = unit{"knots", "kn"}
 	kph = unit{"kilometres per hour", " km/h"}
+	l   = unit{"litres", "L"}
 	lb  = unit{"pounds", " ℔"}
 	m   = unit{"metres", "m"}
 	mi  = unit{"miles", " mi"}
@@ -80,6 +81,8 @@ func Info(unit string, request string) string {
 		return extr(kn, request)
 	case "in":
 		return extr(in, request)
+	case "l":
+		return extr(l, request)
 	case "lb":
 		return extr(lb, request)
 	case "m":

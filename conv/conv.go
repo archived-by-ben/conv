@@ -161,7 +161,7 @@ func pResults(m string, x float64) {
 			y = si.Inch(common.Metre(x))
 			pSupplement(y, "in")
 		}
-	case "cum", "bbl", "guk", "gus":
+	case "cum", "bbl", "guk", "gus", "l":
 		switch m {
 		case "cum":
 			y = si.GallonUK(common.Cubicmetre(x))
@@ -180,15 +180,24 @@ func pResults(m string, x float64) {
 			y = si.Cubicmetre(common.GallonUS(x))
 			pLegacy(x, y, m, "cum")
 			x = y
+		case "l":
+			y = si.GallonUK(common.Litre(x))
+			z = si.GallonUS(common.Litre(x))
+			pLegacy(x, y, m, "guk")
+			pSupplement(z, "gus")
+			x = si.Cubicmetre(common.Litre(x))
 		}
 		p("\nAnd also")
+		if y = si.Litre(common.Cubicmetre(x)); m != "l" && y >= 0.1 {
+			pSupplement(y, "l")
+		}
 		if y = si.Barrel(common.Cubicmetre(x)); m != "bbl" && y >= 0.1 {
 			pSupplement(y, "bbl")
 		}
-		if y = si.GallonUK(common.Cubicmetre(x)); m != "guk" && m != "cum" && y >= 0.1 {
+		if y = si.GallonUK(common.Cubicmetre(x)); m != "guk" && m != "cum" && m != "l" && y >= 0.1 {
 			pSupplement(y, "guk")
 		}
-		if y = si.GallonUS(common.Cubicmetre(x)); m != "gus" && m != "cum" && y >= 0.1 {
+		if y = si.GallonUS(common.Cubicmetre(x)); m != "gus" && m != "cum" && m != "l" && y >= 0.1 {
 			pSupplement(y, "gus")
 		}
 
@@ -267,7 +276,7 @@ func calcPrefix(x float64, e int, fs string, us string) {
 
 // phelp prints the end user help.
 func pHelp() {
-	slice := []string{"bbl", "c", "cm", "ct", "cum", "f", "ft", "g", "guk", "gus", "hp", "in", "km", "kn", "kph", "lb", "m", "mph", "mps", "mi", "nm", "oz", "st", "w", "yd"}
+	slice := []string{"bbl", "c", "cm", "ct", "cum", "f", "ft", "g", "guk", "gus", "hp", "in", "km", "kn", "kph", "l", "lb", "m", "mph", "mps", "mi", "nm", "oz", "st", "w", "yd"}
 	p("conv is a tool that converts common use units of measurements.\n\n")
 	p("Usage:\n\tconv measurement unit\n\n")
 	p("Example:\n\tconv 100f\n\n")

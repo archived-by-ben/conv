@@ -83,6 +83,10 @@ func Kn(x float64) float64 {
 	return x / 0.514444
 }
 
+func Litre(x float64) float64 {
+	return x / 0.001
+}
+
 func Metre(x float64) float64 {
 	return x
 }

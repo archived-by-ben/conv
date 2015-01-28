@@ -212,6 +212,23 @@ func TestKn(t *testing.T) {
 	}
 }
 
+func TestLitre(t *testing.T) {
+	cases := []struct {
+		in, want float64
+	}{
+		{0, 0},
+		{1, 0.001},
+		{1000, 1},
+		{1001, 1.0010000000000001},
+	}
+	for _, c := range cases {
+		got := Litre(c.in)
+		if got != c.want {
+			t.Errorf("Litre(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
 func TestMetre(t *testing.T) {
 	cases := []struct {
 		in, want float64

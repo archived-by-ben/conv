@@ -105,8 +105,8 @@ func TestGallonUK(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 0.00454609},
-		{555.555, 2.5256030299499996},
+		{219.97, 1},
+		{241.967, 1.1},
 	}
 	for _, c := range cases {
 		got := GallonUK(c.in)
@@ -121,8 +121,8 @@ func TestGallonUS(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 0.003785411784},
-		{555.555, 2.10300444366012},
+		{264.17, 1},
+		{290.58700000000005, 1.1},
 	}
 	for _, c := range cases {
 		got := GallonUS(c.in)
@@ -316,7 +316,8 @@ func TestOunce(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 28},
+		{1, 28.3495231},
+		{5.5, 155.92237705},
 	}
 	for _, c := range cases {
 		got := Ounce(c.in)

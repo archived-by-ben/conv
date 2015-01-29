@@ -2,29 +2,6 @@ package si
 
 import "testing"
 
-func TestRound(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{100, "100"},
-		{1.1, "1.1"},
-		{1.25, "1.2"},
-		{81.0, "81"},
-		{81.000000000001, "81"},
-		{81.01, "81"},
-		{839.87365, "839.9"},
-		{-839.87365, "-839.9"},
-		{1.39700, "1.4"},
-	}
-	for _, c := range cases {
-		got := Round(c.in)
-		if got != c.want {
-			t.Errorf("Round(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
 func TestBarrel(t *testing.T) {
 	cases := []struct {
 		in, want float64
@@ -127,8 +104,8 @@ func TestGallonUK(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 219.96924829908778},
-		{1.1, 241.9661731289966},
+		{4.546074464699732, 1000},
+		{5.051143337727871, 1111.1},
 	}
 	for _, c := range cases {
 		got := GallonUK(c.in)
@@ -143,8 +120,8 @@ func TestGallonUS(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{1, 264.1720523581484},
-		{1.1, 290.5892575939633},
+		{3.7854411931710636, 1000},
+		{4.206003709732369, 1111.1},
 	}
 	for _, c := range cases {
 		got := GallonUS(c.in)
@@ -338,9 +315,9 @@ func TestOunce(t *testing.T) {
 		in, want float64
 	}{
 		{0, 0},
-		{28, 1},
-		{500, 17.857142857142858},
-		{222.222, 7.9365000000000006},
+		{28, 0.9876709354592282},
+		{500, 17.63698099034336},
+		{222.222, 7.838650379272165},
 	}
 	for _, c := range cases {
 		got := Ounce(c.in)

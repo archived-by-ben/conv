@@ -35,11 +35,11 @@ func Gram(x float64) float64 {
 }
 
 func GallonUK(x float64) float64 {
-	return x * 0.00454609
+	return x / 219.97
 }
 
 func GallonUS(x float64) float64 {
-	return x * 0.003785411784
+	return x / 264.17
 }
 
 func Horsepower(x float64) float64 {
@@ -87,7 +87,7 @@ func Nautical(x float64) float64 {
 }
 
 func Ounce(x float64) float64 {
-	return x * 28
+	return x * 28.3495231
 }
 
 func Pound(x float64) float64 {

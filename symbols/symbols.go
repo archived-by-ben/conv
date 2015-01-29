@@ -6,6 +6,14 @@ import (
 	"fmt"
 )
 
+/*
+TODO
+* ounce
+* pint
+* quart
+* pony
+*/
+
 type unit struct {
 	name, symbol string
 }
@@ -24,9 +32,10 @@ var (
 	gus = unit{"us gallon", "gal"}
 	hp  = unit{"horsepower", " hp"}
 	in  = unit{"inches", "″"}
+	kg  = unit{"kilograms", "kg"}
 	km  = unit{"kilometres", "km"}
 	kn  = unit{"knots", "kn"}
-	kph = unit{"kilometres per hour", " km/h"}
+	kmh = unit{"kilometres per hour", " km/h"}
 	l   = unit{"litres", "L"}
 	lb  = unit{"pounds", " ℔"}
 	m   = unit{"metres", "m"}
@@ -40,73 +49,67 @@ var (
 	yd  = unit{"yards", " yd"}
 )
 
-/*
-* litre
-* ounce
-* pint
-* quart
-* pony
- */
-
 // Info extracts data from the collection of unit data.
 // Here it fetches the row of data then uses extr to fetch
 // the piece of data.
-func Info(unit string, request string) string {
+func Info(unit string, req string) string {
 	switch unit {
 	case "bbl":
-		return extr(bbl, request)
+		return extr(bbl, req)
 	case "c":
-		return extr(c, request)
+		return extr(c, req)
 	case "cm":
-		return extr(cm, request)
+		return extr(cm, req)
 	case "ct":
-		return extr(ct, request)
+		return extr(ct, req)
 	case "f":
-		return extr(f, request)
+		return extr(f, req)
 	case "ft":
-		return extr(ft, request)
+		return extr(ft, req)
 	case "g":
-		return extr(g, request)
+		return extr(g, req)
 	case "guk":
-		return extr(guk, request)
+		return extr(guk, req)
 	case "gus":
-		return extr(gus, request)
+		return extr(gus, req)
 	case "km":
-		return extr(km, request)
+		return extr(km, req)
 	case "hp":
-		return extr(hp, request)
-	case "kph":
-		return extr(kph, request)
+		return extr(hp, req)
+	case "kg":
+		return extr(kg, req)
+	case "kmh", "kph":
+		return extr(kmh, req)
 	case "kn":
-		return extr(kn, request)
+		return extr(kn, req)
 	case "in":
-		return extr(in, request)
+		return extr(in, req)
 	case "l":
-		return extr(l, request)
+		return extr(l, req)
 	case "lb":
-		return extr(lb, request)
+		return extr(lb, req)
 	case "m":
-		return extr(m, request)
+		return extr(m, req)
 	case "cum":
-		return extr(cum, request)
+		return extr(cum, req)
 	case "mi":
-		return extr(mi, request)
-	case "mph":
-		return extr(mph, request)
+		return extr(mi, req)
+	case "mph", "mih":
+		return extr(mph, req)
 	case "mps":
-		return extr(mps, request)
+		return extr(mps, req)
 	case "nm":
-		return extr(nm, request)
+		return extr(nm, req)
 	case "st":
-		return extr(st, request)
+		return extr(st, req)
 	case "oz":
-		return extr(oz, request)
+		return extr(oz, req)
 	case "yd":
-		return extr(yd, request)
+		return extr(yd, req)
 	case "w":
-		return extr(w, request)
+		return extr(w, req)
 	}
-	err := fmt.Errorf("the unit %s is cannot be found", unit)
+	err := fmt.Errorf("the symbol %s cannot be found", unit)
 	return fmt.Sprint(err)
 }
 

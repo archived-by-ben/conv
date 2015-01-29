@@ -2,27 +2,6 @@
 // and converts them into common metric and imperial units.
 package si
 
-import (
-	"fmt"
-	"math"
-	"strconv"
-)
-
-// Set to true to disable Round() func
-var float bool = false
-
-// Rounds a float for display. Decimals less than 0.1 are dropped.
-func Round(x float64) string {
-	if float == true {
-		return fmt.Sprintf("%.49f", x)
-	}
-	y, _ := strconv.ParseFloat(fmt.Sprintf("%.0f", x), 64)
-	if z := y - x; math.Abs(z) < 0.1 {
-		return fmt.Sprintf("%.0f", x)
-	}
-	return fmt.Sprintf("%.1f", x)
-}
-
 func Barrel(x float64) float64 {
 	return x * 6.2898105697751
 }
@@ -56,11 +35,11 @@ func Gram(x float64) float64 {
 }
 
 func GallonUK(x float64) float64 {
-	return x / 0.00454609
+	return x * 219.97
 }
 
 func GallonUS(x float64) float64 {
-	return x / 0.003785411784
+	return x * 264.17
 }
 
 func Horsepower(x float64) float64 {
@@ -108,7 +87,7 @@ func Nautical(x float64) float64 {
 }
 
 func Ounce(x float64) float64 {
-	return x / 28
+	return x / 28.3495231
 }
 
 func Pound(x float64) float64 {

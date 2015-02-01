@@ -37,6 +37,30 @@ func Prefix(x float64, e int, fs string, us string) string {
 	return ""
 }
 
+func Bblcum(x float64) string {
+	y := common.Barrel(x)
+	z := si.Cubicmetre(y)
+	return Round(z)
+}
+
+func Bblguk(x float64) string {
+	y := common.Barrel(x)
+	z := si.GallonUK(y)
+	return Round(z)
+}
+
+func Bblgus(x float64) string {
+	y := common.Barrel(x)
+	z := si.GallonUS(y)
+	return Round(z)
+}
+
+func Bbll(x float64) string {
+	y := common.Barrel(x)
+	z := si.Litre(y)
+	return Round(z)
+}
+
 func Cf(x float64) string {
 	y := common.Celsius(x)
 	z := si.Fahrenheit(y)
@@ -70,6 +94,30 @@ func Cmnm(x float64) string {
 func Cmyd(x float64) string {
 	y := common.Centimetre(x)
 	z := si.Yard(y)
+	return Round(z)
+}
+
+func Cumguk(x float64) string {
+	y := common.Cubicmetre(x)
+	z := si.GallonUK(y)
+	return Round(z)
+}
+
+func Cumgus(x float64) string {
+	y := common.Cubicmetre(x)
+	z := si.GallonUS(y)
+	return Round(z)
+}
+
+func Cumbbl(x float64) string {
+	y := common.Cubicmetre(x)
+	z := si.Barrel(y)
+	return Round(z)
+}
+
+func Cuml(x float64) string {
+	y := common.Cubicmetre(x)
+	z := si.Litre(y)
 	return Round(z)
 }
 
@@ -259,6 +307,24 @@ func Kmhmps(x float64) string {
 	return Round(z)
 }
 
+func Knkmh(x float64) string {
+	y := common.Kn(x)
+	z := si.Kmh(y)
+	return Round(z)
+}
+
+func Knmps(x float64) string {
+	y := common.Kn(x)
+	z := si.Mps(y)
+	return Round(z)
+}
+
+func Knmph(x float64) string {
+	y := common.Kn(x)
+	z := si.Mph(y)
+	return Round(z)
+}
+
 func Lbg(x float64) string {
 	y := common.Pound(x)
 	z := si.Gram(y)
@@ -337,6 +403,26 @@ func Mphmps(x float64) string {
 	return Round(z)
 }
 
+/////
+func Mpskmh(x float64) string {
+	y := common.Mps(x)
+	z := si.Kmh(y)
+	return Round(z)
+}
+
+func Mpskn(x float64) string {
+	y := common.Mps(x)
+	z := si.Kn(y)
+	return Round(z)
+}
+
+func Mpsmph(x float64) string {
+	y := common.Mps(x)
+	z := si.Mph(y)
+	return Round(z)
+}
+
+/////
 func Nmcm(x float64) string {
 	y := common.Nautical(x)
 	z := si.Centimetre(y)
@@ -462,56 +548,3 @@ func Ydnm(x float64) string {
 	z := si.Nautical(y)
 	return Round(z)
 }
-
-///\\\\////\\\\\/////\\\\\\
-func Cumguk(x float64) string {
-	y := common.Cubicmetre(x)
-	z := si.GallonUK(y)
-	return Round(z)
-}
-
-func Cumgus(x float64) string {
-	y := common.Cubicmetre(x)
-	z := si.GallonUS(y)
-	return Round(z)
-}
-
-func Cumbbl(x float64) string {
-	y := common.Cubicmetre(x)
-	z := si.Barrel(y)
-	return Round(z)
-}
-
-func Cuml(x float64) string {
-	y := common.Cubicmetre(x)
-	z := si.Litre(y)
-	return Round(z)
-}
-
-///
-
-func Bblcum(x float64) string {
-	y := common.Barrel(x)
-	z := si.Cubicmetre(y)
-	return Round(z)
-}
-
-func Bblguk(x float64) string {
-	y := common.Barrel(x)
-	z := si.GallonUK(y)
-	return Round(z)
-}
-
-func Bblgus(x float64) string {
-	y := common.Barrel(x)
-	z := si.GallonUS(y)
-	return Round(z)
-}
-
-func Bbll(x float64) string {
-	y := common.Barrel(x)
-	z := si.Litre(y)
-	return Round(z)
-}
-
-///

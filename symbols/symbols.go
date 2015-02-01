@@ -6,14 +6,6 @@ import (
 	"fmt"
 )
 
-/*
-TODO
-* ounce
-* pint
-* quart
-* pony
-*/
-
 type unit struct {
 	name, symbol string
 }

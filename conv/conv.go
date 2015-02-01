@@ -20,13 +20,13 @@ var (
 
 // Init checks for the existence of user arguments otherwise the help is displayed.
 func init() {
-	ver := "0.3"
+	ver := "0.4"
 	// no arguments provided
 	if len(os.Args) < 2 {
 		err := fmt.Errorf("No measurement or unit were provided")
 		fmt.Println(err)
 		pHelp()
-		os.Exit(0)
+		os.Exit(1)
 	}
 	// user requested help
 	switch os.Args[1] {
@@ -36,10 +36,6 @@ func init() {
 	case "-v", "--version", "/v":
 		p("conv %s\n", ver)
 		pCopyright()
-		os.Exit(0)
-	case "-x":
-		/* Test functions argument (delete before making public) */
-		fmt.Println("experimental mode:")
 		os.Exit(0)
 	}
 }
@@ -83,6 +79,20 @@ func pResults(m string, x float64) {
 		pL1x(s, "mps")
 		s = convert.Mphkn(x)
 		pL1x(s, "kn")
+	case "mps":
+		s = convert.Mpskmh(x)
+		pL1(x, s, m, "kmh")
+		s = convert.Mpsmph(x)
+		pL1x(s, "mph")
+		s = convert.Mpskn(x)
+		pL1x(s, "kn")
+	case "kn":
+		s = convert.Knkmh(x)
+		pL1(x, s, m, "kmh")
+		s = convert.Knmps(x)
+		pL1x(s, "mps")
+		s = convert.Knmph(x)
+		pL1x(s, "mph")
 	// weight
 	case "ct":
 		s = convert.Ctg(x)
@@ -305,7 +315,7 @@ func pResults(m string, x float64) {
 			err := fmt.Errorf("No unit type was supplied")
 			fmt.Println(err)
 		}
-		os.Exit(0)
+		os.Exit(1)
 	}
 }
 

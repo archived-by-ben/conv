@@ -695,6 +695,56 @@ func TestKmhmps(t *testing.T) {
 	}
 }
 
+func TestKnkmh(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1.9"},
+		{10, "18.5"},
+	}
+	for _, c := range cases {
+		got := Knkmh(c.in)
+		if got != c.want {
+			t.Errorf("Knkmh(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestKnmps(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "0.5"},
+		{10, "5.1"},
+	}
+	for _, c := range cases {
+		got := Knmps(c.in)
+		if got != c.want {
+			t.Errorf("Kmhmps(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestKnmph(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1.2"},
+		{10, "11.5"},
+		{100, "115"},
+		{50.5, "58.1"},
+	}
+	for _, c := range cases {
+		got := Knmph(c.in)
+		if got != c.want {
+			t.Errorf("Kmhmph(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
 func TestLbg(t *testing.T) {
 	cases := []struct {
 		in   float64
@@ -743,6 +793,111 @@ func TestLbst(t *testing.T) {
 	}
 }
 
+func TestMicm(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "160934.4"},
+	}
+	for _, c := range cases {
+		got := Micm(c.in)
+		if got != c.want {
+			t.Errorf("Micm(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMift(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "5280"},
+	}
+	for _, c := range cases {
+		got := Mift(c.in)
+		if got != c.want {
+			t.Errorf("Mift(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMiin(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "63360"},
+	}
+	for _, c := range cases {
+		got := Miin(c.in)
+		if got != c.want {
+			t.Errorf("Miin(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMikm(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1.6"},
+	}
+	for _, c := range cases {
+		got := Mikm(c.in)
+		if got != c.want {
+			t.Errorf("Mikm(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMim(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1609.3"},
+	}
+	for _, c := range cases {
+		got := Mim(c.in)
+		if got != c.want {
+			t.Errorf("Mim(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMinm(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{10, "8.7"},
+	}
+	for _, c := range cases {
+		got := Minm(c.in)
+		if got != c.want {
+			t.Errorf("Minm(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMiyd(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1760"},
+	}
+	for _, c := range cases {
+		got := Miyd(c.in)
+		if got != c.want {
+			t.Errorf("Miyd(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
 func TestMphkmh(t *testing.T) {
 	cases := []struct {
 		in   float64
@@ -773,6 +928,175 @@ func TestMphmps(t *testing.T) {
 		got := Mphmps(c.in)
 		if got != c.want {
 			t.Errorf("Mphmps(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMphkn(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "0.9"},
+		{100, "86.9"},
+	}
+	for _, c := range cases {
+		got := Mphkn(c.in)
+		if got != c.want {
+			t.Errorf("Mphkn(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMpskmh(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{10, "36"},
+		{100.1, "360.4"},
+	}
+	for _, c := range cases {
+		got := Mpskmh(c.in)
+		if got != c.want {
+			t.Errorf("Mpskmh(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMpsmph(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{10, "22.4"},
+		{100.1, "224"},
+	}
+	for _, c := range cases {
+		got := Mpsmph(c.in)
+		if got != c.want {
+			t.Errorf("Mpsmph(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestMpskn(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{10, "19.4"},
+		{55.5, "107.9"},
+	}
+	for _, c := range cases {
+		got := Mpskn(c.in)
+		if got != c.want {
+			t.Errorf("Mpskn(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmcm(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "185200"},
+	}
+	for _, c := range cases {
+		got := Nmcm(c.in)
+		if got != c.want {
+			t.Errorf("Nmcm(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmft(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "6076.1"},
+	}
+	for _, c := range cases {
+		got := Nmft(c.in)
+		if got != c.want {
+			t.Errorf("Nmft(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmin(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "72913.4"},
+	}
+	for _, c := range cases {
+		got := Nmin(c.in)
+		if got != c.want {
+			t.Errorf("Nmin(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmkm(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1.9"},
+	}
+	for _, c := range cases {
+		got := Nmkm(c.in)
+		if got != c.want {
+			t.Errorf("Nmkm(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmm(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1852"},
+	}
+	for _, c := range cases {
+		got := Nmm(c.in)
+		if got != c.want {
+			t.Errorf("Nmm(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmmi(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "1.2"},
+	}
+	for _, c := range cases {
+		got := Nmmi(c.in)
+		if got != c.want {
+			t.Errorf("Nmmi(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestNmyd(t *testing.T) {
+	cases := []struct {
+		in   float64
+		want string
+	}{
+		{1, "2025.4"},
+	}
+	for _, c := range cases {
+		got := Nmyd(c.in)
+		if got != c.want {
+			t.Errorf("Nmyd(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }
@@ -992,219 +1316,6 @@ func TestYdnm(t *testing.T) {
 		got := Ydnm(c.in)
 		if got != c.want {
 			t.Errorf("Ydnm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-//
-
-func TestMicm(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "160934.4"},
-	}
-	for _, c := range cases {
-		got := Micm(c.in)
-		if got != c.want {
-			t.Errorf("Micm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMift(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "5280"},
-	}
-	for _, c := range cases {
-		got := Mift(c.in)
-		if got != c.want {
-			t.Errorf("Mift(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMiin(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "63360"},
-	}
-	for _, c := range cases {
-		got := Miin(c.in)
-		if got != c.want {
-			t.Errorf("Miin(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMikm(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "1.6"},
-	}
-	for _, c := range cases {
-		got := Mikm(c.in)
-		if got != c.want {
-			t.Errorf("Mikm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMim(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "1609.3"},
-	}
-	for _, c := range cases {
-		got := Mim(c.in)
-		if got != c.want {
-			t.Errorf("Mim(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMinm(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{10, "8.7"},
-	}
-	for _, c := range cases {
-		got := Minm(c.in)
-		if got != c.want {
-			t.Errorf("Minm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestMiyd(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "1760"},
-	}
-	for _, c := range cases {
-		got := Miyd(c.in)
-		if got != c.want {
-			t.Errorf("Miyd(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-//////
-func TestNmcm(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "185200"},
-	}
-	for _, c := range cases {
-		got := Nmcm(c.in)
-		if got != c.want {
-			t.Errorf("Nmcm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNmft(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "6076.1"},
-	}
-	for _, c := range cases {
-		got := Nmft(c.in)
-		if got != c.want {
-			t.Errorf("Nmft(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNmin(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "72913.4"},
-	}
-	for _, c := range cases {
-		got := Nmin(c.in)
-		if got != c.want {
-			t.Errorf("Nmin(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNmkm(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "1.9"},
-	}
-	for _, c := range cases {
-		got := Nmkm(c.in)
-		if got != c.want {
-			t.Errorf("Nmkm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNmm(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "1852"},
-	}
-	for _, c := range cases {
-		got := Nmm(c.in)
-		if got != c.want {
-			t.Errorf("Nmm(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNmmi(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "1.2"},
-	}
-	for _, c := range cases {
-		got := Nmmi(c.in)
-		if got != c.want {
-			t.Errorf("Nmmi(%q) == %q, want %q", c.in, got, c.want)
-		}
-	}
-}
-
-func TestNmyd(t *testing.T) {
-	cases := []struct {
-		in   float64
-		want string
-	}{
-		{1, "2025.4"},
-	}
-	for _, c := range cases {
-		got := Nmyd(c.in)
-		if got != c.want {
-			t.Errorf("Nmyd(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }

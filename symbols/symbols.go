@@ -4,6 +4,7 @@ package symbols
 
 import (
 	"fmt"
+	"runtime"
 )
 
 type unit struct {
@@ -26,8 +27,8 @@ var (
 	in  = unit{"inches", "″"}
 	kg  = unit{"kilograms", "kg"}
 	km  = unit{"kilometres", "km"}
-	kn  = unit{"knots", "kn"}
 	kmh = unit{"kilometres per hour", " km/h"}
+	kn  = unit{"knots", "kn"}
 	l   = unit{"litres", "L"}
 	lb  = unit{"pounds", " ℔"}
 	m   = unit{"metres", "m"}
@@ -40,6 +41,21 @@ var (
 	w   = unit{"watts", " W"}
 	yd  = unit{"yards", " yd"}
 )
+
+func init() {
+	// Modification to fix Windows Control Panel limitations.
+	if runtime.GOOS == "windows" {
+		ft.symbol = "ft"
+		in.symbol = "in"
+		lb.symbol = "lb"
+	}
+}
+
+func UnitSlice() []string {
+	slice := []string{"bbl", "c", "cm", "ct", "cum", "f", "ft", "g", "guk", "gus", "hp", "in", "kg", "km",
+		"kmh", "kn", "l", "lb", "m", "mi", "mph", "mps", "nm", "oz", "st", "w", "yd"}
+	return slice
+}
 
 // Info extracts data from the collection of unit data.
 // Here it fetches the row of data then uses extr to fetch

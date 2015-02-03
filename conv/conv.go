@@ -10,6 +10,7 @@ import (
 	"github.com/bengarrett/conv/symbols"
 	"os"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 )
@@ -20,13 +21,13 @@ var (
 
 // Init checks for the existence of user arguments otherwise the help is displayed.
 func init() {
-	ver := "0.4"
+	ver := "0.5"
 	// no arguments provided
 	if len(os.Args) < 2 {
 		err := fmt.Errorf("No measurement or unit were provided")
 		fmt.Println(err)
 		pHelp()
-		os.Exit(1)
+		os.Exit(0)
 	}
 	// user requested help
 	switch os.Args[1] {
@@ -34,7 +35,7 @@ func init() {
 		pHelp()
 		os.Exit(0)
 	case "-v", "--version", "/v":
-		p("conv %s\n", ver)
+		p("conv %s (%s-%s/%s)\n", ver, runtime.Compiler, runtime.GOARCH, runtime.GOOS)
 		pCopyright()
 		os.Exit(0)
 	}
@@ -382,11 +383,18 @@ func pL2(x string, uout string) {
 
 // phelp prints the end user help.
 func pHelp() {
-	slice := []string{"bbl", "c", "cm", "ct", "cum", "f", "ft", "g", "guk", "gus", "hp", "in", "km", "kmh", "kn", "l", "lb", "m", "mph", "mps", "mi", "nm", "oz", "st", "w", "yd"}
-	p("conv is a tool that converts common use units of measurements.\n\n")
-	p("Usage:\n\tconv measurement unit\n\n")
-	p("Example:\n\tconv 100f\n\n")
-	p("\t100 °F is about 37.8 °C (Celsius)\n\n")
+	slice := symbols.UnitSlice()
+	p("conv is a tool to convert everyday units of measurements.\n\n")
+	p("Usage:\t\tconv (measurement)(unit)\n")
+	if runtime.GOOS == "windows" {
+		p("\t\tconv /?\tHelp\n")
+		p("\t\tconv /v\tVersion\n")
+	} else {
+		p("\t\tconv -h | --help\n")
+		p("\t\tconv -v | --version\n")
+	}
+	p("\nExample:\tconv 100f\n")
+	p("\t\t100 °F is about 37.8 °C (Celsius)\n\n")
 	p("The permitted units are:\n\n")
 	pHelpT(slice)
 	p("\nCreated by Ben Garrett as a learning project for Go (lang).\n")
@@ -397,14 +405,13 @@ func pHelp() {
 // pHelpT is a template used by the phelp function to print permitted units.
 func pHelpT(s []string) {
 	for _, u := range s {
-		p("\t%s\t%s \t%s\n", u, strings.TrimSpace(symbols.Info(u, "sym")), symbols.Info(u, "nam"))
+		p("\t%s\t= %s \t%s\n", u, strings.TrimSpace(symbols.Info(u, "sym")), symbols.Info(u, "nam"))
 	}
 }
 
 // pCopyright prints a copyright notice.
 func pCopyright() {
 	/* Please keep this as it is a requirement of the MIT licence. */
-	p("\n\tThe MIT License (MIT)\n")
-	p("\tCopyright © 2015 Ben Garrett.\n")
-	p("\t<http://choosealicense.com/licenses/mit/>\n")
+	p("\nCopyright © 2015 Ben Garrett.\n")
+	p("The MIT License (MIT)\t<http://choosealicense.com/licenses/mit/>\n")
 }

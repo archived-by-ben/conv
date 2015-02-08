@@ -1,5 +1,4 @@
-// Package units returns the name, symbols and categories of
-// the units used in conversion.
+// symbols package returns the name and symbols for the measurements.
 package symbols
 
 import (
@@ -7,128 +6,62 @@ import (
 	"runtime"
 )
 
-type unit struct {
-	name, symbol string
+type Unit struct {
+	Name, Symbol string
 }
 
-// Unit data containing the name, symbol & category.
-var (
-	bbl = unit{"petroleum barrel", "bbl"}
-	c   = unit{"Celsius", "°C"}
-	cm  = unit{"centimetres", "cm"}
-	ct  = unit{"carats", " ct"}
-	cum = unit{"cubic metre", "m³"}
-	f   = unit{"Fahrenheit", "°F"}
-	ft  = unit{"feet", "′"}
-	g   = unit{"grams", "g"}
-	guk = unit{"imperial gallon", "gal"}
-	gus = unit{"us gallon", "gal"}
-	hp  = unit{"horsepower", " hp"}
-	in  = unit{"inches", "″"}
-	kg  = unit{"kilograms", "kg"}
-	km  = unit{"kilometres", "km"}
-	kmh = unit{"kilometres per hour", " km/h"}
-	kn  = unit{"knots", "kn"}
-	l   = unit{"litres", "L"}
-	lb  = unit{"pounds", " ℔"}
-	m   = unit{"metres", "m"}
-	mi  = unit{"miles", " mi"}
-	mph = unit{"miles per hour", " mph"}
-	mps = unit{"metres per second", "m/s"}
-	nm  = unit{"nautical miles", " NM"}
-	oz  = unit{"ounces", " oz"}
-	st  = unit{"stone", " st"}
-	w   = unit{"watts", " W"}
-	yd  = unit{"yards", " yd"}
-)
-
-func init() {
-	// Modification to fix Windows Control Panel limitations.
+func UnitData() (unitDetails map[string]Unit) {
+	// stored data as a structure indexed as a key value map
+	unitDetails = make(map[string]Unit)
+	unitDetails["bbl"] = Unit{"petroleum barrel", "bbl"}
+	unitDetails["c"] = Unit{"Celsius", "°C"}
+	unitDetails["cm"] = Unit{"centimetres", "cm"}
+	unitDetails["ct"] = Unit{"carats", " ct"}
+	unitDetails["cum"] = Unit{"cubic metre", "m³"}
+	unitDetails["f"] = Unit{"Fahrenheit", "°F"}
+	unitDetails["ft"] = Unit{"feet", "′"}
+	unitDetails["g"] = Unit{"grams", "g"}
+	unitDetails["guk"] = Unit{"imperial gallon", "gal"}
+	unitDetails["gus"] = Unit{"us gallon", "gal"}
+	unitDetails["hp"] = Unit{"horsepower", " hp"}
+	unitDetails["in"] = Unit{"inches", "″"}
+	unitDetails["kg"] = Unit{"kilograms", "kg"}
+	unitDetails["km"] = Unit{"kilometres", "km"}
+	unitDetails["kmh"] = Unit{"kilometres per hour", " km/h"}
+	unitDetails["kn"] = Unit{"knots", "kn"}
+	unitDetails["l"] = Unit{"litres", "L"}
+	unitDetails["lb"] = Unit{"pounds", " ℔"}
+	unitDetails["m"] = Unit{"metres", "m"}
+	unitDetails["mi"] = Unit{"miles", " mi"}
+	unitDetails["mph"] = Unit{"miles per hour", " mph"}
+	unitDetails["mps"] = Unit{"metres per second", "m/s"}
+	unitDetails["nm"] = Unit{"nautical miles", " NM"}
+	unitDetails["oz"] = Unit{"ounces", " oz"}
+	unitDetails["st"] = Unit{"stone", " st"}
+	unitDetails["w"] = Unit{"watts", " W"}
+	unitDetails["yd"] = Unit{"yards", " yd"}
+	// fixes for Windows Command Prompt font limitations
 	if runtime.GOOS == "windows" {
-		ft.symbol = "ft"
-		in.symbol = "in"
-		lb.symbol = "lb"
+		unitDetails["ft"] = Unit{"feet", "ft"}
+		unitDetails["in"] = Unit{"inches", "in"}
+		unitDetails["lb"] = Unit{"pounds", " lb"}
 	}
+	// display all data
+	return unitDetails
 }
 
-func UnitSlice() []string {
-	slice := []string{"bbl", "c", "cm", "ct", "cum", "f", "ft", "g", "guk", "gus", "hp", "in", "kg", "km",
-		"kmh", "kn", "l", "lb", "m", "mi", "mph", "mps", "nm", "oz", "st", "w", "yd"}
-	return slice
+func Glyph(Unit string) string {
+	detail, found := UnitData()[Unit]
+	if found == false {
+		return fmt.Sprint("glyph(\"%v\") does not exist", Unit)
+	}
+	return detail.Symbol
 }
 
-// Info extracts data from the collection of unit data.
-// Here it fetches the row of data then uses extr to fetch
-// the piece of data.
-func Info(unit string, req string) string {
-	switch unit {
-	case "bbl":
-		return extr(bbl, req)
-	case "c":
-		return extr(c, req)
-	case "cm":
-		return extr(cm, req)
-	case "ct":
-		return extr(ct, req)
-	case "f":
-		return extr(f, req)
-	case "ft":
-		return extr(ft, req)
-	case "g":
-		return extr(g, req)
-	case "guk":
-		return extr(guk, req)
-	case "gus":
-		return extr(gus, req)
-	case "km":
-		return extr(km, req)
-	case "hp":
-		return extr(hp, req)
-	case "kg":
-		return extr(kg, req)
-	case "kmh", "kph":
-		return extr(kmh, req)
-	case "kn":
-		return extr(kn, req)
-	case "in":
-		return extr(in, req)
-	case "l":
-		return extr(l, req)
-	case "lb":
-		return extr(lb, req)
-	case "m":
-		return extr(m, req)
-	case "cum":
-		return extr(cum, req)
-	case "mi":
-		return extr(mi, req)
-	case "mph", "mih":
-		return extr(mph, req)
-	case "mps":
-		return extr(mps, req)
-	case "nm":
-		return extr(nm, req)
-	case "st":
-		return extr(st, req)
-	case "oz":
-		return extr(oz, req)
-	case "yd":
-		return extr(yd, req)
-	case "w":
-		return extr(w, req)
+func Proper(Unit string) string {
+	detail, found := UnitData()[Unit]
+	if found == false {
+		return fmt.Sprint("proper(\"%v\") does not exist", Unit)
 	}
-	err := fmt.Errorf("the symbol %s cannot be found", unit)
-	return fmt.Sprint(err)
-}
-
-// Extra extracts the data from the unit collection.
-func extr(u unit, req string) string {
-	switch req {
-	case "nam":
-		return u.name
-	case "sym":
-		return u.symbol
-	}
-	err := fmt.Errorf("the requested field %s does not exist", req)
-	return fmt.Sprint(err)
+	return detail.Name
 }

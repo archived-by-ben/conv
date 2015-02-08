@@ -2,17 +2,34 @@ package symbols
 
 import "testing"
 
-func TestInfo(t *testing.T) {
+func TestProper(t *testing.T) {
 	cases := []struct {
 		in, want string
 	}{
-		{"nam", "Celsius"},
-		{"sym", "°C"},
+		{"f", "Fahrenheit"},
+		{"c", "Celsius"},
+		{"guk", "imperial gallon"},
 	}
 	for _, c := range cases {
-		got := Info("c", c.in)
+		got := Proper(c.in)
 		if got != c.want {
-			t.Errorf("Info(%q) == %q, want %q", c.in, got, c.want)
+			t.Errorf("Proper(%q) == %q, want %q", c.in, got, c.want)
+		}
+	}
+}
+
+func TestGlyph(t *testing.T) {
+	cases := []struct {
+		in, want string
+	}{
+		{"f", "°F"},
+		{"c", "°C"},
+		{"guk", "gal"},
+	}
+	for _, c := range cases {
+		got := Glyph(c.in)
+		if got != c.want {
+			t.Errorf("Glyph(%q) == %q, want %q", c.in, got, c.want)
 		}
 	}
 }

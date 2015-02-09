@@ -14,6 +14,8 @@ func UnitData() (unitDetails map[string]Unit) {
 	// stored data as a structure indexed as a key value map
 	unitDetails = make(map[string]Unit)
 	unitDetails["bbl"] = Unit{"petroleum barrel", "bbl"}
+	unitDetails["bps"] = Unit{"bits per second", " bps"}
+	unitDetails["bs"] = Unit{"bytes per second", " B/s"}
 	unitDetails["c"] = Unit{"Celsius", "°C"}
 	unitDetails["cm"] = Unit{"centimetres", "cm"}
 	unitDetails["ct"] = Unit{"carats", " ct"}
@@ -25,6 +27,8 @@ func UnitData() (unitDetails map[string]Unit) {
 	unitDetails["gus"] = Unit{"us gallon", "gal"}
 	unitDetails["hp"] = Unit{"horsepower", " hp"}
 	unitDetails["in"] = Unit{"inches", "″"}
+	unitDetails["kbps"] = Unit{"kilobit per second", " kib/s"}
+	unitDetails["kbs"] = Unit{"kilobyte per second", " kB/s"}
 	unitDetails["kg"] = Unit{"kilograms", "kg"}
 	unitDetails["km"] = Unit{"kilometres", "km"}
 	unitDetails["kmh"] = Unit{"kilometres per hour", " km/h"}
@@ -32,6 +36,8 @@ func UnitData() (unitDetails map[string]Unit) {
 	unitDetails["l"] = Unit{"litres", "L"}
 	unitDetails["lb"] = Unit{"pounds", " ℔"}
 	unitDetails["m"] = Unit{"metres", "m"}
+	unitDetails["mbps"] = Unit{"megabit per second", " Mib/s"}
+	unitDetails["mbs"] = Unit{"megabyte per second", " MB/s"}
 	unitDetails["mi"] = Unit{"miles", " mi"}
 	unitDetails["mph"] = Unit{"miles per hour", " mph"}
 	unitDetails["mps"] = Unit{"metres per second", "m/s"}
@@ -40,6 +46,7 @@ func UnitData() (unitDetails map[string]Unit) {
 	unitDetails["st"] = Unit{"stone", " st"}
 	unitDetails["w"] = Unit{"watts", " W"}
 	unitDetails["yd"] = Unit{"yards", " yd"}
+
 	// fixes for Windows Command Prompt font limitations
 	if runtime.GOOS == "windows" {
 		unitDetails["ft"] = Unit{"feet", "ft"}

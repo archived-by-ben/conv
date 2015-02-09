@@ -102,6 +102,18 @@ func si_common(x float64, out string) (common float64, err error) {
 		common = x
 	case "Yard", "yd":
 		common = x / 0.9144
+	case "bps":
+		common = x
+	case "kbps":
+		common = x * 1000
+	case "mbps":
+		common = x * 1000000
+	case "bs":
+		common = x * 0.125
+	case "kbs":
+		common = x * 1000 * 0.125
+	case "mbs":
+		common = x * 1000000 * 0.125
 	}
 	return common, nil
 }
@@ -166,6 +178,18 @@ func common_si(x float64, in string) (si float64, err error) {
 		si = x
 	case "Yard", "yd":
 		si = x * 0.9144
+	case "bps":
+		si = x
+	case "kbps":
+		si = x * 1000
+	case "mbps":
+		si = x * 1000000
+	case "bs":
+		si = x / 0.125
+	case "kbs":
+		si = x * 1000 / 0.125
+	case "mbs":
+		si = x * 1000000 / 0.125
 	}
 	return si, nil
 }

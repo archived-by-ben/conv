@@ -20,7 +20,7 @@ import (
 
 const (
 	app = "conv"
-	ver = "0.6"
+	ver = "0.65"
 )
 
 var (
@@ -28,7 +28,7 @@ var (
 	buf bytes.Buffer
 	// bs returns the content of the buffer as a string
 	bs = buf.String
-	// btformats a string and saves it to the buffer
+	// bt formats a string and saves it to the buffer
 	bt = func(format string, a ...interface{}) {
 		buf.WriteString(fmt.Sprintf(format, a...))
 	}
@@ -176,6 +176,7 @@ func process(m string, x float64) (err error) {
 		}
 		s = calculate.Converter(x, m, o)
 		dspPrimary(x, s, m, o)
+		bt("\n%s", also)
 		dspExtras(x, m, o, "kmh", "mph", "mps", "kn")
 	// weight
 	case "ct":
@@ -223,6 +224,14 @@ func process(m string, x float64) (err error) {
 		dspPrimary(x, s, m, o)
 		bt("\n%s", also)
 		dspExtras(x, m, o, "bbl", "cum", "guk", "gus", "l")
+	case "bps", "kbps", "mbps":
+		o = "bs"
+		s = calculate.Converter(x, m, o)
+		dspPrimary(x, s, m, o)
+	case "bs", "kbs", "mbs":
+		o = "bps"
+		s = calculate.Converter(x, m, o)
+		dspPrimary(x, s, m, o)
 	}
 	return err
 }
@@ -233,15 +242,22 @@ func dspPrimary(x float64, s string, uin string, uout string) {
 	bt("%s%s is about ", calculate.Round(x), symin)
 	// apply metric prefixes
 	switch uout {
-	case "w", "g", "l":
+	case "w", "g", "l", "bs", "bps":
 		prefixes := []string{"k", "M", "G", "T", "P", "E", "Z", "Y"}
 		for e, i := 24, 7; e > 0; e, i = e-3, i-1 {
-			b := int(x / math.Pow10(e))
+			f, _ := strconv.ParseFloat(s, 64)
+			b := f / math.Pow10(e)
 			if b >= 1 {
+				bs := strconv.FormatFloat(b, 'f', 0, 64)
+				if b < 10 {
+					bs = strconv.FormatFloat(b, 'f', 2, 64)
+				} else if b < 100 {
+					bs = strconv.FormatFloat(b, 'f', 1, 64)
+				}
 				if strings.TrimSpace(symout) != symout {
-					bt("%v ", b)
+					bt("%v ", bs)
 				} else {
-					bt("%v", b)
+					bt("%v", bs)
 				}
 				bt("%v%v, ", prefixes[i], strings.TrimSpace(symout))
 			}

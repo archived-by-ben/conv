@@ -2,10 +2,10 @@
 conv is a terminal tool to convert everyday units of measurements.
 
 ###Downloads
-* [Linux](https://github.com/bengarrett/conv/Downloads/conv_linux_amd64.zip)
-* [OS X](https://github.com/bengarrett/conv/Downloads/conv_darwin_amd64.zip)
-* [Windows](https://github.com/bengarrett/conv/Downloads/conv_windows_amd64.zip)
-* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://github.com/bengarrett/conv/Downloads/conv_linux_arm.zip)
+* [Linux](https://github.com/bengarrett/conv/blob/master/Downloads/conv_linux_amd64.zip)
+* [OS X](https://github.com/bengarrett/conv/blob/master/Downloads/conv_darwin_amd64.zip)
+* [Windows](https://github.com/bengarrett/conv/blob/master/Downloads/conv_windows_amd64.zip)
+* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://github.com/bengarrett/conv/blob/master/Downloads/conv_linux_arm.zip)
 
 BSD, Plan 9, ARM and 32-bit/386 binaries can be found in [Downloads](https://github.com/bengarrett/conv/Downloads/).
 

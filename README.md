@@ -1,11 +1,18 @@
 #Readme
-conv is a tool to convert everyday units of measurements.
+conv is a terminal tool to convert everyday units of measurements.
 
 ###Downloads
-<links to binaries will go here>
+* [Linux](https://github.com/bengarrett/conv/Downloads/conv_linux_amd64.zip)
+* [OS X](https://github.com/bengarrett/conv/Downloads/conv_darwin_amd64.zip)
+* [Windows](https://github.com/bengarrett/conv/Downloads/conv_windows_amd64.zip)
+* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://github.com/bengarrett/conv/Downloads/conv_linux_arm.zip)
+
+BSD, Plan 9, ARM and 32-bit/386 binaries can be found in [Downloads](https://github.com/bengarrett/conv/Downloads/).
 
 ###Instructions
-```
+conv is a self-contained, portable program with no dependencies. Simply download the appropriate archive for your operating system. Unzip it to a directory of your choosing and run it from your terminal or command prompt.
+
+```shell
 Usage:  conv (measurement)(unit)
         conv -h | --help
         conv -v | --version
@@ -50,17 +57,15 @@ The permitted units are:
     yd      » yd    yards
 ```
 
-###Future additions?
+###Future additions
 * Add support for fractions to use with select Imperial units; feet + inches; stone + pounds.
-* Add the following measurements.
+* Add measurements.
+
 ##### Areas
-* acre
-* hectare
-* square km
-* square mile
-* square yard
+* acre; hectare; square km; square mile; square yard
+
 ##### Liquid volumes
-* ounce
-* pint
-* quart
-* pony
+* ounce; pint; quart; pony
+
+###Licence
+Copyright © 2015 Ben Garrett. [The MIT License (MIT)](http://choosealicense.com/licenses/mit/)

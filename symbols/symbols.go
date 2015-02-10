@@ -1,4 +1,4 @@
-// symbols package returns the name and symbols for the measurements.
+// Symbols package handles the name and symbol of a measurement.
 package symbols
 
 import (
@@ -10,8 +10,9 @@ type Unit struct {
 	Name, Symbol string
 }
 
+// UnitData function returns the unit data
 func UnitData() (unitDetails map[string]Unit) {
-	// stored data as a structure indexed as a key value map
+	// Use a structure, indexed to a key value map for easy sorting
 	unitDetails = make(map[string]Unit)
 	unitDetails["bbl"] = Unit{"petroleum barrel", "bbl"}
 	unitDetails["bps"] = Unit{"bits per second", " bps"}
@@ -46,7 +47,6 @@ func UnitData() (unitDetails map[string]Unit) {
 	unitDetails["st"] = Unit{"stone", " st"}
 	unitDetails["w"] = Unit{"watts", " W"}
 	unitDetails["yd"] = Unit{"yards", " yd"}
-
 	// fixes for Windows Command Prompt font limitations
 	if runtime.GOOS == "windows" {
 		unitDetails["ft"] = Unit{"feet", "ft"}
@@ -57,6 +57,7 @@ func UnitData() (unitDetails map[string]Unit) {
 	return unitDetails
 }
 
+// Glyph function returns a unit's symbol or glyph.
 func Glyph(Unit string) string {
 	detail, found := UnitData()[Unit]
 	if found == false {
@@ -65,6 +66,7 @@ func Glyph(Unit string) string {
 	return detail.Symbol
 }
 
+// Glyph function returns a unit's name.
 func Proper(Unit string) string {
 	detail, found := UnitData()[Unit]
 	if found == false {

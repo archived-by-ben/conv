@@ -19,16 +19,16 @@ import (
 )
 
 const (
-	app = "conv"
-	ver = "0.65"
+	app = "conv" // application name
+	ver = "1.00" // version
 )
 
 var (
-	// initialise buffer which will be used to save text intended for the user's console
+	// initialise the buffer which will be used to save text intended for the user's console
 	buf bytes.Buffer
 	// bs returns the content of the buffer as a string
 	bs = buf.String
-	// bt formats a string and saves it to the buffer
+	// bt formats strings and saves them to the buffer
 	bt = func(format string, a ...interface{}) {
 		buf.WriteString(fmt.Sprintf(format, a...))
 	}
@@ -36,7 +36,7 @@ var (
 	p = fmt.Printf
 )
 
-// Init handles arguments that require the application to exit back to the operating system.
+// Init function handles arguments that force the application to exit back to the operating system.
 func init() {
 	if len(os.Args) == 2 {
 		arg := os.Args[1]
@@ -80,11 +80,11 @@ func init() {
 	}
 }
 
-// Handles the calculation and display of measurement unit conversions.
+// Main function handles the calculation and display of measurement conversions.
 func main() {
 	// parse user input
 	m, x, err := input(os.Args)
-	// if there were no problems with user input, calculate and print results.
+	// if there were no problems with user input, use process() to calculate and save the results to the buffer.
 	// if the user values created errors, return those errors instead.
 	if err == nil {
 		err = process(m, x)
@@ -99,11 +99,12 @@ func main() {
 		fmt.Println(err)
 		os.Exit(0)
 	}
-	// otherwise calculations and results worked print out the buffer to display results.
+	// if no errors print the buffer to the user's console to display conversion results.
 	p("%s\n", bs())
+	// EOP
 }
 
-// Input parses user arguments to determine the measurement unit and value.
+// Input function parses the user's arguments to determine the measurement unit and value.
 func input(i []string) (m string, x float64, err error) {
 	var args string = ""
 	if len(i) < 2 {
@@ -119,15 +120,15 @@ func input(i []string) (m string, x float64, err error) {
 		args = strings.Join(s, "")
 		args = strings.ToLower(args)
 	}
-	// create a reg expression to replace all non-alphabetic characters
+	// create a regular expression to replace all non-alphabetic characters
 	if m = regexp.MustCompile("[^a-z]").ReplaceAllString(args, ""); len(m) < 1 {
 		err = fmt.Errorf("no unit type was supplied")
 	} else {
-		// create reg expression to removal anything that isn't a number, decimal or sign
+		// create regex to removal anything that isn't a number, decimal or sign
 		if val := regexp.MustCompile("[^-?0-9+.?[^0-9]*").ReplaceAllString(args, ""); len(val) < 1 {
 			err = fmt.Errorf("no measurement was provided")
 		} else {
-			// convert val to float64 so we can use it with calculations.
+			// convert val from a string type into a float64 so we can use it in calculations.
 			if x, err = strconv.ParseFloat(val, 64); err != nil {
 				err = fmt.Errorf("could not parse '%v'", val)
 			} else {
@@ -140,14 +141,41 @@ func input(i []string) (m string, x float64, err error) {
 	return m, x, err
 }
 
-// process determines which measurement conversions should be returned
+// Process function handles logic to determine which measurement conversions should be returned.
 func process(m string, x float64) (err error) {
-	s, o, also := "", "", "And also " // string, output
-	// allow alternatives
-	if m == "kph" {
+	s, o, also := "", "", "\nAnd also " // string, output, "and also" string
+	// allow for common use alternative names and spelling
+	switch m {
+	case "knot", "knots":
+		m = "kn"
+	case "kph", "kmph":
 		m = "kmh"
-	} else if m == "mih" {
+	case "mih":
 		m = "mph"
+	case "metre", "meter", "metres", "meters":
+		m = "m"
+	case "mile", "miles":
+		m = "mi"
+	case "yard", "yards":
+		m = "yd"
+	case "litres", "liters", "litre", "liter":
+		m = "l"
+	case "ounce", "ounces":
+		m = "oz"
+	case "pound", "pounds":
+		m = "lb"
+	case "stone":
+		m = "st"
+	case "watt", "watts":
+		m = "w"
+	case "inch", "inches":
+		m = "in"
+	case "gram", "grams":
+		m = "g"
+	case "foot", "feet":
+		m = "ft"
+	case "carat", "carats":
+		m = "ct"
 	}
 	switch m {
 	default:
@@ -176,7 +204,7 @@ func process(m string, x float64) (err error) {
 		}
 		s = calculate.Converter(x, m, o)
 		dspPrimary(x, s, m, o)
-		bt("\n%s", also)
+		bt(also)
 		dspExtras(x, m, o, "kmh", "mph", "mps", "kn")
 	// weight
 	case "ct":
@@ -192,7 +220,7 @@ func process(m string, x float64) (err error) {
 		}
 		s = calculate.Converter(x, m, o)
 		dspPrimary(x, s, m, o)
-		bt("\n%s", also)
+		bt(also)
 		dspExtras(x, m, o, "ct", "g", "kg", "oz", "lb", "st")
 	// distance - length
 	case "cm", "m", "km", "in", "ft", "yd", "mi", "nm":
@@ -210,7 +238,7 @@ func process(m string, x float64) (err error) {
 		}
 		s = calculate.Converter(x, m, o)
 		dspPrimary(x, s, m, o)
-		bt("\n%s", also)
+		bt(also)
 		dspExtras(x, m, o, "cm", "m", "km")
 		bt("\n")
 		dspExtras(x, m, o, "in", "ft", "yd", "mi", "nm")
@@ -222,7 +250,7 @@ func process(m string, x float64) (err error) {
 		}
 		s = calculate.Converter(x, m, o)
 		dspPrimary(x, s, m, o)
-		bt("\n%s", also)
+		bt(also)
 		dspExtras(x, m, o, "bbl", "cum", "guk", "gus", "l")
 	case "bps", "kbps", "mbps":
 		o = "bs"
@@ -236,7 +264,7 @@ func process(m string, x float64) (err error) {
 	return err
 }
 
-// dspPrimary prints the primary conversion result.
+// DspPrimary function prints the primary conversion result.
 func dspPrimary(x float64, s string, uin string, uout string) {
 	symin, symout, nameout := symbols.Glyph(uin), symbols.Glyph(uout), symbols.Proper(uout)
 	bt("%s%s is about ", calculate.Round(x), symin)
@@ -266,7 +294,7 @@ func dspPrimary(x float64, s string, uin string, uout string) {
 	bt("%s%s (%s)", s, symout, nameout)
 }
 
-// dspExtras appends the results of all additional conversions.
+// DspExtras function appends the results of all additional conversions.
 func dspExtras(x float64, m string, skip string, uout ...string) {
 	c := 0
 	for _, u := range uout {
@@ -280,7 +308,7 @@ func dspExtras(x float64, m string, skip string, uout ...string) {
 	}
 }
 
-// help prints the end user help.
+// Help function prints the end user help.
 func help() {
 	// simulate user provided arguments for example
 	example := "100f"
@@ -310,7 +338,7 @@ func help() {
 	symbols.UnitData()
 }
 
-// copyright prints the copyright notice.
+// Copyright function prints the copyright notice.
 func copyright() {
 	/* Please keep this as it is a requirement of the MIT licence. */
 	bt("\nCopyright © 2015 Ben Garrett.\nThe MIT License (MIT)\t<http://choosealicense.com/licenses/mit/>")

@@ -1,4 +1,4 @@
-// calculate package does the mathematics of the measurements.
+// Calculate package handles the mathematics for the measurement conversions.
 package calculate
 
 import (
@@ -11,7 +11,8 @@ const (
 	float = false
 )
 
-// Converter takes a value and converts it from in unit to out unit.
+// Converter function takes a measurement value and an 'in' unit string and converts it to the requested 'out' unit.
+// There is no allowed unit conversion logic in this function, that is handled by conv/process().
 func Converter(x float64, in string, out string) (result string) {
 	// note: common_si() resets err to nil
 	if y, err := common_si(x, in); err != nil {
@@ -26,8 +27,8 @@ func Converter(x float64, in string, out string) (result string) {
 	}
 }
 
-// Rounds a float for display.
-// Decimal values less than 0.1 are dropped.
+// Round function rounds a float and converts it to a string for display.
+// Decimal values lower than 0.1 are dropped.
 func Round(x float64) (rounded string) {
 	if float == true {
 		rounded = fmt.Sprintf("%.49f", x)
@@ -42,65 +43,65 @@ func Round(x float64) (rounded string) {
 	return rounded
 }
 
-// si_common takes a SI measurement and converts it into a common measurement.
+// Si_common function takes a SI measurement and converts it into a common measurement.
 func si_common(x float64, out string) (common float64, err error) {
 	switch out {
 	default:
 		err := fmt.Errorf("si_common could not find unit '%v'", out)
 		return common, err
-	case "Barrel", "bbl":
+	case "bbl":
 		common = x * 6.2898105697751
-	case "Carat", "ct":
+	case "ct":
 		common = x / 0.2
-	case "Celsius", "c":
+	case "c":
 		common = x - 273.15
-	case "Centimetre", "cm":
+	case "cm":
 		common = x * 100
-	case "Cubicmetre", "cum":
+	case "cum":
 		common = x
-	case "Fahrenheit", "f":
+	case "f":
 		common = x*9/5 - 459.67
-	case "Foot", "ft":
+	case "ft":
 		common = x / 0.3048
-	case "Gram", "g":
+	case "g":
 		common = x
-	case "GallonUK", "guk":
+	case "guk":
 		common = x * 219.97
-	case "GallonUS", "gus":
+	case "gus":
 		common = x * 264.17
-	case "Horsepower", "hp":
+	case "hp":
 		common = x / 746
-	case "Inch", "in":
+	case "in":
 		common = x / 0.0254
 	case "kg":
 		common = x / 1000
-	case "Kilometre", "km":
+	case "km":
 		common = x / 1000
-	case "Kmh", "kmh":
+	case "kmh":
 		common = x / 0.27777777777778
-	case "Kn", "kn":
+	case "kn":
 		common = x / 0.514444
-	case "Litre", "l":
+	case "l":
 		common = x / 0.001
-	case "Metre", "m":
+	case "m":
 		common = x
-	case "Mile", "mi":
+	case "mi":
 		common = x / 1609.344
-	case "Mph", "mph":
+	case "mph":
 		common = x / 0.44704
-	case "Mps", "mps":
+	case "mps":
 		common = x
-	case "Nautical", "nm":
+	case "nm":
 		common = x / 1852
-	case "Ounce", "oz":
+	case "oz":
 		common = x / 28.3495231
-	case "Pound", "lb":
+	case "lb":
 		common = x / 453.59237
-	case "Stone", "st":
+	case "st":
 		common = x / 6350.29318
-	case "Watt", "w":
+	case "w":
 		common = x
-	case "Yard", "yd":
+	case "yd":
 		common = x / 0.9144
 	case "bps":
 		common = x
@@ -118,65 +119,65 @@ func si_common(x float64, out string) (common float64, err error) {
 	return common, nil
 }
 
-// common_si takes a common measurement and converts it into a si measurement.
+// Common_si function takes a common measurement and converts it into a si measurement.
 func common_si(x float64, in string) (si float64, err error) {
 	switch in {
 	default:
 		err := fmt.Errorf("common_si could not find unit '%v'", in)
 		return si, err
-	case "Barrel", "bbl":
+	case "bbl":
 		si = x * 0.158987294928
-	case "Carat", "ct":
+	case "ct":
 		si = x * 0.2
-	case "Celsius", "c":
+	case "c":
 		si = x + 273.15
-	case "Centimetre", "cm":
+	case "cm":
 		si = x * 0.01
-	case "Cubicmetre", "cum":
+	case "cum":
 		si = x
-	case "Fahrenheit", "f":
+	case "f":
 		si = (x + 459.67) * 5 / 9
-	case "Foot", "ft":
+	case "ft":
 		si = x * 0.3048
-	case "Gram", "g":
+	case "g":
 		si = x
-	case "GallonUK", "guk":
+	case "guk":
 		si = x / 219.97
-	case "GallonUS", "gus":
+	case "gus":
 		si = x / 264.17
-	case "Horsepower", "hp":
+	case "hp":
 		si = x * 746
-	case "Inch", "in":
+	case "in":
 		si = x * 0.0254
 	case "kg":
 		si = x * 1000
-	case "Kilometre", "km":
+	case "km":
 		si = x * 1000
-	case "Kmh", "kmh":
+	case "kmh":
 		si = x * 0.27777777777778
-	case "Kn", "kn":
+	case "kn":
 		si = x * 0.514444
-	case "Litre", "l":
+	case "l":
 		si = x * 0.001
-	case "Metre", "m":
+	case "m":
 		si = x
-	case "Mile", "mi":
+	case "mi":
 		si = x * 1609.344
-	case "Mph", "mph":
+	case "mph":
 		si = x * 0.44704
-	case "Mps", "mps":
+	case "mps":
 		si = x
-	case "Nautical", "nm":
+	case "nm":
 		si = x * 1852
-	case "Ounce", "oz":
+	case "oz":
 		si = x * 28.3495231
-	case "Pound", "lb":
+	case "lb":
 		si = x * 453.59237
-	case "Stone", "st":
+	case "st":
 		si = x * 6350.29318
-	case "Watt", "w":
+	case "w":
 		si = x
-	case "Yard", "yd":
+	case "yd":
 		si = x * 0.9144
 	case "bps":
 		si = x

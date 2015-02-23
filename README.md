@@ -2,12 +2,12 @@
 conv is a terminal tool to convert everyday units of measurements.
 
 ###Downloads
-* [Linux](https://raw.github.com/bengarrett/conv/master/Downloads/conv_linux_amd64.zip)
-* [OS X](https://raw.github.com/bengarrett/conv/master/Downloads/conv_darwin_amd64.zip)
-* [Windows](https://raw.github.com/bengarrett/conv/master/Downloads/conv_windows_amd64.zip)
-* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://raw.github.com/bengarrett/conv/master/Downloads/conv_linux_arm.zip)
+* [Linux](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtM1ZtY1p2SVd0a3c)
+* [OS X](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtVVdBcnpBVkhQSkE)
+* [Windows](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtMFd3Unc1eWZiam8)
+* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtUjk5Q2xrU25xNEE)
 
-BSD, Plan 9, ARM and 32-bit/386 binaries can be found in [Downloads](https://github.com/bengarrett/conv/tree/master/Downloads/).
+BSD, Plan 9, ARM and 32-bit binaries can be found at [Google Drive](https://drive.google.com/folderview?id=0B-JKAyjDRrBtfmVWa3RPbEFEdjRPdDMzTi1LcmdYMzhBM05NWjB5THlQek5zajIyclR5YTg&usp=drive_web#list).
 
 ###Instructions
 conv is a self-contained, portable program with no dependencies. Simply download the appropriate archive for your operating system. Unzip it to a directory of your choosing and run it from your terminal or command prompt.

@@ -2,12 +2,21 @@
 conv is a terminal tool to convert everyday units of measurements.
 
 ###Downloads
-* [Linux](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtM1ZtY1p2SVd0a3c)
-* [OS X](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtVVdBcnpBVkhQSkE)
-* [Windows](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtMFd3Unc1eWZiam8)
-* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://drive.google.com/uc?export=download&id=0B-JKAyjDRrBtUjk5Q2xrU25xNEE)
+##### GitHub
+* [Linux](https://github.com/bengarrett/conv/releases/download/1.0/conv_linux_amd64.zip)
+* [OS X](https://github.com/bengarrett/conv/releases/download/1.0/conv_darwin_amd64.zip)
+* [Windows](https://github.com/bengarrett/conv/releases/download/1.0/conv_windows_amd64.zip)
+* [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://github.com/bengarrett/conv/releases/download/1.0/conv_linux_arm.zip) 
 
-BSD, Plan 9, ARM and 32-bit binaries can be found at [Google Drive](https://drive.google.com/folderview?id=0B-JKAyjDRrBtfmVWa3RPbEFEdjRPdDMzTi1LcmdYMzhBM05NWjB5THlQek5zajIyclR5YTg&usp=drive_web#list).
+BSD, Plan 9, ARM and 32-bit binaries can be found on [GitHub releases](https://github.com/bengarrett/conv/releases)
+
+###### [Google Drive mirror](https://drive.google.com/folderview?id=0B-JKAyjDRrBtfmVWa3RPbEFEdjRPdDMzTi1LcmdYMzhBM05NWjB5THlQek5zajIyclR5YTg&usp=drive_web#list)
+
+#### conv on Ubuntu
+![conv_on_ubunutu](https://cloud.githubusercontent.com/assets/513842/6430090/a7ee70c6-c04f-11e4-92a0-81611650bc7d.png)
+
+#### conv on Windows
+![conv_on_command_prompt](https://cloud.githubusercontent.com/assets/513842/6430091/b26ce32a-c04f-11e4-9d64-565d44870848.png)
 
 ###Instructions
 conv is a self-contained, portable program with no dependencies. Simply download the appropriate archive for your operating system. Unzip it to a directory of your choosing and run it from your terminal or command prompt.

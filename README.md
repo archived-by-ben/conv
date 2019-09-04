@@ -1,7 +1,12 @@
-#Readme
-conv is a terminal tool to convert everyday units of measurements.
+# conv
 
-###Downloads
+![GitHub](https://img.shields.io/github/license/bengarrett/conv?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/no/2015?style=flat-square)
+
+conv is a terminal tool to convert everyday units of measurements
+
+### Downloads
+
 ##### GitHub
 * [Linux](https://github.com/bengarrett/conv/releases/download/1.0/conv_linux_amd64.zip)
 * [OS X](https://github.com/bengarrett/conv/releases/download/1.0/conv_darwin_amd64.zip)
@@ -9,8 +14,6 @@ conv is a terminal tool to convert everyday units of measurements.
 * [Linux for ARM (Raspberry Pi, Arduino, etc.)](https://github.com/bengarrett/conv/releases/download/1.0/conv_linux_arm.zip) 
 
 BSD, Plan 9, ARM and 32-bit binaries can be found on [GitHub releases](https://github.com/bengarrett/conv/releases)
-
-###### [Google Drive mirror](https://drive.google.com/folderview?id=0B-JKAyjDRrBtfmVWa3RPbEFEdjRPdDMzTi1LcmdYMzhBM05NWjB5THlQek5zajIyclR5YTg&usp=drive_web#list)
 
 #### conv on Ubuntu
 ![conv_on_ubunutu](https://cloud.githubusercontent.com/assets/513842/6430090/a7ee70c6-c04f-11e4-92a0-81611650bc7d.png)
@@ -66,15 +69,15 @@ The permitted units are:
     yd      » yd    yards
 ```
 
-###Future additions
-* Add support for fractions to use with select Imperial units; feet + inches; stone + pounds.
-* Add measurements.
+### ~~Future additions~~
+~~* Add support for fractions to use with select Imperial units; feet + inches; stone + pounds.~~
+~~* Add measurements.~~
 
-##### Areas
-* acre; hectare; square km; square mile; square yard
+##### ~~Areas~~
+~~* acre; hectare; square km; square mile; square yard~~
 
-##### Liquid volumes
-* ounce; pint; quart; pony
+##### ~~Liquid volumes~~
+~~* ounce; pint; quart; pony~~
 
-###Licence
+### Licence
 Copyright © 2015 Ben Garrett. [The MIT License (MIT)](http://choosealicense.com/licenses/mit/)

@@ -21,7 +21,7 @@ BSD, Plan 9, ARM and 32-bit binaries can be found on [GitHub releases](https://g
 #### conv on Windows
 ![conv_on_command_prompt](https://cloud.githubusercontent.com/assets/513842/6430091/b26ce32a-c04f-11e4-9d64-565d44870848.png)
 
-###Instructions
+### Instructions
 conv is a self-contained, portable program with no dependencies. Simply download the appropriate archive for your operating system. Unzip it to a directory of your choosing and run it from your terminal or command prompt.
 
 ```shell
